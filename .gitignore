@@ -16,6 +16,12 @@
 # next.js
 /.next/
 /out/
+.agents
+.agent
+.gemini
+.cursor
+SKILL.md
+
 
 # production
 /build
