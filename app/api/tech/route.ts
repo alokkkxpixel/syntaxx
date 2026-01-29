@@ -8,9 +8,7 @@ export async function GET() {
     const techs = await prisma.tech.findMany({
       orderBy: { name: 'asc' },
       include: {
-        _count: {
-          select: { docs: true }
-        }
+        docs: true
       }
     });
 

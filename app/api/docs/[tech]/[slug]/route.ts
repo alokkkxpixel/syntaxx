@@ -31,7 +31,8 @@ const doc = await prisma.doc.findUnique({
   include: {
     snippets: true,
     tags: true,
-    tech: true
+    tech: true,
+    
   }
 });
 

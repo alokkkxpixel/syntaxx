@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CodeSnippet } from "@/components/CodeSnippet";
 
-export default function StaticDoc() {
+export default function HardCodedDocs() {
   return (
     <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 overflow-hidden">
       {/* Header */}
