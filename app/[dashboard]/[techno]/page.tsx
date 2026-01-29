@@ -1,9 +1,7 @@
-"use client"
-import { useParams } from 'next/navigation'
 import React from 'react'
 
-const page = () => {
-   const { techno} = useParams()
+const page = async ({ params }: { params: { techno: string } }) => {
+   const { techno }= await params;
   return (
     <div> {techno} </div>
   )
