@@ -35,13 +35,14 @@ model Doc {
 
 
 model CodeSnippet {
-  id        String   @id @default(uuid())
-  code      String
-  language  String
-  filename  String?
-  docId     String
-  createdAt DateTime @default(now())
-  doc       Doc      @relation(fields: [docId], references: [id], onDelete: Cascade)
+  id          String   @id @default(uuid())
+  code        String
+  language    String
+  filename    String?
+  description String
+  docId       String
+  createdAt   DateTime @default(now())
+  doc         Doc      @relation(fields: [docId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
