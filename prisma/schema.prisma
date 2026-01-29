@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tech {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  docs      Doc[]
+}
+
+model Doc {
+  id          String    @id @default(uuid())
+  title       String
+  slug        String
+  description String
+  techId      String
+  tech        Tech      @relation(fields: [techId], references: [id])
+
+  snippets    CodeSnippet[]
+  tags        DocTag[]
+
+  createdAt   DateTime  @default(now())
+
+  @@unique([techId, slug], name: "techId_slug")
+  @@index([techId])
+  @@index([slug])
+}
+
+
+model CodeSnippet {
+  id        String   @id @default(uuid())
+  code      String
+  language  String
+  filename  String?
+  docId     String
+  createdAt DateTime @default(now())
+  doc       Doc      @relation(fields: [docId], references: [id], onDelete: Cascade)
+}
+
+model Tag {
+  id   String   @id @default(uuid())
+  name String
+  slug String   @unique
+  docs DocTag[]
+}
+
+model DocTag {
+  docId String
+  tagId String
+  doc   Doc    @relation(fields: [docId], references: [id], onDelete: Cascade)
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([docId, tagId])
+   @@index([tagId])
+}
