@@ -6,7 +6,11 @@ import { generateSlug } from "@/lib/slug";
 export async function GET() {
   try {
     const techs = await prisma.tech.findMany({
-      orderBy: { name: 'asc' },
+      orderBy: { 
+        docs: {
+          _count: "desc"
+        }
+      },
       include: {
         docs: true
       }
