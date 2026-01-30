@@ -73,9 +73,9 @@ export default function StaticDoc({ doc }: StaticDocProps) {
       {doc.tags.length > 0 && (
         <div className="flex justify-start items-center flex-wrap gap-2 pt-10 border-t border-border/40">
           <span className="text-xs font-semibold text-muted-foreground/50 uppercase tracking-wider mr-2">Tags:</span>
-          {doc.tags.map((tag) => (
+          {doc.tags.map((tag,idx) => (
             <span
-              key={tag.id}
+              key={idx}
               className="inline-flex items-center px-3 py-1 rounded-full bg-secondary/30 text-secondary-foreground/80 text-xs font-medium border border-transparent hover:border-border/60 hover:bg-secondary/50 hover:text-foreground transition-all duration-300 cursor-default"
             >
               <span className="mr-1 text-muted-foreground/30 font-mono">#</span>
