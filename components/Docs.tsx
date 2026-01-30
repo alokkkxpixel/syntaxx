@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CodeSnippet } from "@/components/CodeSnippet";
 
+import { useState, useEffect } from "react";
+
 interface Snippet {
   id: string;
   language: string;
@@ -32,8 +34,47 @@ interface StaticDocProps {
 }
 
 export default function StaticDoc({ doc }: StaticDocProps) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300); // Short delay to prevent "millisecond glitch" and show smooth transition
+    return () => clearTimeout(timer);
+  }, [doc.id]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
+        {/* Header Skeleton */}
+        <div className="space-y-3 animate-pulse">
+          <div className="h-10 w-3/4 bg-muted rounded-lg" />
+          <div className="h-4 w-full bg-muted rounded-md" />
+          <div className="h-4 w-2/3 bg-muted rounded-md" />
+        </div>
+        
+        <div className="h-px w-full bg-border/40 my-6" />
+
+        {/* Content Skeleton */}
+        <div className="space-y-10">
+          {[1, 2].map((i) => (
+            <div key={i} className="space-y-4 animate-pulse">
+              <div className="h-8 w-1/2 bg-muted rounded-md" />
+              <div className="h-48 w-full bg-muted rounded-xl" />
+              <div className="space-y-2">
+                <div className="h-4 w-full bg-muted rounded-md" />
+                <div className="h-4 w-5/6 bg-muted rounded-md" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 overflow-hidden">
+    <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 overflow-hidden transition-all duration-500 ease-in-out">
       {/* Header */}
       <header className="space-y-3 w-full overflow-hidden">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-balance break-words">

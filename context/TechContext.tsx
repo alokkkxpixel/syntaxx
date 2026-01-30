@@ -1,6 +1,14 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  ReactNode,
+} from "react";
 
 export interface CodeSnippet {
   id: string;
@@ -37,19 +45,28 @@ interface TechContextType {
   refreshTechs: () => Promise<void>;
 }
 
-const TechContext = createContext<TechContextType | undefined>(undefined);
+const TechContext = createContext<TechContextType | null>(null);
 
 export function TechProvider({ children }: { children: ReactNode }) {
+  const cacheRef = useRef<Tech[] | null>(null);
+
   const [techs, setTechs] = useState<Tech[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTechs = React.useCallback(async () => {
+  const fetchTechs = async () => {
+    if (cacheRef.current) return; // ✅ fetch once
+
     setLoading(true);
     try {
-      const res = await fetch("/api/tech");
+      
+      const res = await fetch("/api/tech",{
+    cache: 'no-cache'
+  });
       if (!res.ok) throw new Error("Failed to fetch technologies");
-      const data = await res.json();
+
+      const data: Tech[] = await res.json();
+      cacheRef.current = data;
       setTechs(data);
       setError(null);
     } catch (err: any) {
@@ -57,30 +74,32 @@ export function TechProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchTechs();
   }, []);
 
-  const value = React.useMemo(() => ({
-    techs,
-    loading,
-    error,
-    refreshTechs: fetchTechs
-  }), [techs, loading, error, fetchTechs]);
-
-  return (
-    <TechContext.Provider value={value}>
-      {children}
-    </TechContext.Provider>
+  const value = useMemo(
+    () => ({
+      techs,
+      loading,
+      error,
+      refreshTechs: async () => {
+        cacheRef.current = null;
+        await fetchTechs();
+      },
+    }),
+    [techs, loading, error]
   );
+
+  return <TechContext.Provider value={value}>{children}</TechContext.Provider>;
 }
 
 export function useTech() {
-  const context = useContext(TechContext);
-  if (context === undefined) {
-    throw new Error("useTech must be used within a TechProvider");
+  const ctx = useContext(TechContext);
+  if (!ctx) {
+    throw new Error("useTech must be used within TechProvider");
   }
-  return context;
+  return ctx;
 }

@@ -15,6 +15,7 @@ import {
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
+import { NavSecondary } from "@/components/nav-secondary"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -25,6 +26,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { useTech } from "@/context/TechContext"
+import { fetchTech } from "@/lib/fetchTech"
 // This is sample data.
 const data = {
   user: {
@@ -156,14 +159,17 @@ const data = {
 }
 
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+   const {techs , loading} =  useTech();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+      
+        <NavMain techs={techs} loading={loading} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

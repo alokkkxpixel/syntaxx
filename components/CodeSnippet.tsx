@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus, vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Check, Copy } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface CodeSnippetProps {
   code: string;
@@ -19,26 +20,28 @@ export function CodeSnippet({
   className = "",
 }: CodeSnippetProps) {
   const [copied, setCopied] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-  // Detect theme changes
+  // Set mounted state
   useEffect(() => {
-    const checkTheme = () => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-
-    // Initial check
-    checkTheme();
-
-    // Watch for theme changes
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
+    setMounted(true);
   }, []);
+
+  // Update theme and ready state
+  useEffect(() => {
+    if (!mounted) return;
+    
+    setIsReady(false);
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 150); // Short delay to ensure highlighter has applied styles
+    
+    return () => clearTimeout(timer);
+  }, [resolvedTheme, code, mounted]);
+
+  const isDark = resolvedTheme === "dark";
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -62,31 +65,35 @@ export function CodeSnippet({
       </button>
 
       {/* Code Block with Horizontal Scroll */}
-      <div className="w-full overflow-x-auto rounded-lg border border-border">
-        <SyntaxHighlighter
-          language={language}
-          style={isDark ? vscDarkPlus : vs}
-          showLineNumbers={showLineNumbers}
-          wrapLongLines={false}
-          customStyle={{
-            margin: 0,
-            borderRadius: "0.5rem",
-            fontSize: "0.875rem",
-            padding: "1rem",
-            background: isDark ? "oklch(0.205 0 0)" : "oklch(0.985 0 0)",
-            minWidth: "max-content",
-          }}
-          codeTagProps={{
-            style: {
-              fontFamily:
-                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+      <div className="w-full overflow-x-auto rounded-lg border border-border min-h-[100px] relative">
+        {!isReady ? (
+          <div className="absolute inset-0 bg-muted animate-pulse rounded-lg" />
+        ) : (
+          <SyntaxHighlighter
+            language={language}
+            style={isDark ? vscDarkPlus : vs}
+            showLineNumbers={showLineNumbers}
+            wrapLongLines={false}
+            customStyle={{
+              margin: 0,
+              borderRadius: "0.5rem",
               fontSize: "0.875rem",
-              lineHeight: "1.5",
-            },
-          }}
-        >
-          {code}
-        </SyntaxHighlighter>
+              padding: "1rem",
+              background: isDark ? "oklch(0.205 0 0)" : "oklch(0.985 0 0)",
+              minWidth: "max-content",
+            }}
+            codeTagProps={{
+              style: {
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                fontSize: "0.875rem",
+                lineHeight: "1.5",
+              },
+            }}
+          >
+            {code}
+          </SyntaxHighlighter>
+        )}
       </div>
     </div>
   );

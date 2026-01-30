@@ -1,6 +1,7 @@
 "use client"
 
-import { BookOpen, ChevronRight } from "lucide-react"
+import { ChevronRight, type LucideIcon } from "lucide-react"
+
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,54 +17,27 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import * as React from "react"
 import Link from "next/link"
-import { Tech } from "@/context/TechContext"
-import { fetchTech } from "@/lib/fetchTech"
 
-export function NavMain({
-  techs = [],
-  loading = false
+export function NavSecondary({
+  items,
 }: {
-  techs?: Tech[],
-  loading?: boolean
+  items: {
+    title: string
+    url: string
+    icon?: LucideIcon
+    isActive?: boolean
+    items?: {
+      title: string
+      url: string
+    }[]
+  }[]
 }) {
-  // Map technologies from the database
-  const techItems = techs.map((tech) => ({
-    title: tech.name,
-    url: `#`,
-    techSlug: tech.slug,
-    icon: BookOpen,
-    isActive: false,
-    items: tech.docs?.map((doc) => ({
-      title: doc.title,
-      url: `/${tech.slug}/${doc.slug}`,
-    })),
-  }))
-   
-     
-
-  if (loading) {
-    return (
-      <SidebarGroup>
-        <SidebarGroupLabel>Technologies</SidebarGroupLabel>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            {[1,2].map((_, idx) => (
-              <div key={idx} className="px-4 py-2 text-sm text-muted-foreground bg-muted/50 h-12 rounded-xl animate-pulse my-1">
-              </div>
-            ))}
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarGroup>
-    );
-  }
-
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Technologies</SidebarGroupLabel>
+      <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
-        {techItems.map((item) => (
+        {items.map((item) => (
           <Collapsible
             key={item.title}
             asChild

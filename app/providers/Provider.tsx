@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import { ThemeProvider } from './theme-provider'
+import { TechProvider } from '@/context/TechContext'
 
 const Provider = ({children}: {children: React.ReactNode}) => {
   return (
@@ -10,7 +11,10 @@ const Provider = ({children}: {children: React.ReactNode}) => {
       enableSystem
       disableTransitionOnChange
     >
+      <TechProvider>
+
       {children}
+      </TechProvider>
     </ThemeProvider>
   )
 }

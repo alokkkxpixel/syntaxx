@@ -17,7 +17,7 @@ export default async function DocPage({ params }: PageProps) {
   // For now, let's fix the response parsing.
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const res = await fetch(`${baseUrl}/api/docs/${dashboard}/${techno}`, {
-    cache: 'no-store'
+    cache: 'no-cache'
   });
   
   if (!res.ok) {
