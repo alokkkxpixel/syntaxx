@@ -51,7 +51,7 @@ export default function DashLayout({
             </Breadcrumb>
             <ModeToggle />
           </div> */}
-          <NavbarDemo showSidebarTrigger={true} />
+          <NavbarDemo  showSidebarTrigger={true} />
         </header>
     
 
@@ -60,7 +60,11 @@ export default function DashLayout({
 
     
     </SidebarProvider>
-  
+
+    <div className="flex bg-red py-20 items-">
+
+    <FooterSection />
+    </div>
     </>
   )
 }

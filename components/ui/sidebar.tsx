@@ -175,7 +175,10 @@ function Sidebar({
         )}
         {...props}
       >
+        <React.Activity mode={ state === "collapsed" ? "visible" : "hidden"}>
+
         {children}
+        </React.Activity>
       </div>
     )
   }

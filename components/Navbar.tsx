@@ -10,7 +10,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { useState } from "react";
+import { Activity, useState } from "react";
 import { ModeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from "./ui/sidebar";
 
@@ -50,7 +50,10 @@ export function NavbarDemo({ showSidebarTrigger = false }: { showSidebarTrigger?
         {/* Mobile Navigation */}
         <MobileNav>
           <MobileNavHeader>
-            {showSidebarTrigger && <SidebarTrigger />}
+            <Activity mode={ showSidebarTrigger ? "visible" : "hidden"} >
+<SidebarTrigger />
+            </Activity>
+          
             <NavbarLogo />
             <MobileNavToggle
               isOpen={isMobileMenuOpen}

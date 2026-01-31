@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 // import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
-import LaunchUI from "@/components/logos/launch-ui";
+// import LaunchUI from "@/components/logos/launch-ui";
 import {
   Footer,
   FooterBottom,
@@ -33,8 +33,8 @@ interface FooterProps {
 }
 
 export default function FooterSection({
-  logo = <LaunchUI />,
-  name = "Launch UI",
+  logo = "",
+  name = "SyntaxX",
   columns = [
     {
       title: "Product",
@@ -60,7 +60,7 @@ export default function FooterSection({
       ],
     },
   ],
-  copyright = "© 2025 Mikołaj Dobrucki. All rights reserved",
+  copyright = "© 2026 SyntaxX. All rights reserved",
   policies = [
     { text: "Privacy Policy", href: "" },
     { text: "Terms of Service", href: "" },
