@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { CodeSnippet } from "@/components/CodeSnippet";
 
 import { useState, useEffect } from "react";
+import { Metadata } from "next";
 
 interface Snippet {
   id: string;
@@ -29,6 +30,13 @@ interface Doc {
   tags: Tag[];
 }
 
+interface PageProps {
+  params: {
+    dashboard: string;
+    techno: string;
+    
+  };
+}
 interface StaticDocProps {
   doc: Doc;
 }
@@ -72,6 +80,8 @@ export default function StaticDoc({ doc }: StaticDocProps) {
       </div>
     );
   }
+
+
 
   return (
     <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 overflow-hidden transition-all duration-500 ease-in-out">
@@ -148,4 +158,15 @@ export default function StaticDoc({ doc }: StaticDocProps) {
       </section>
     </article>
   );
+}
+
+
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
+  const { dashboard, techno } = await params;
+  return {
+    title: `${dashboard.toUpperCase()} Docs | ${techno} hjhj`,
+    description: `Documentation for ${techno} in ${dashboard}`,
+  };
 }

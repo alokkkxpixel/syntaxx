@@ -1,5 +1,6 @@
 
 import Doc from "@/components/Docs";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -9,6 +10,9 @@ interface PageProps {
     
   };
 }
+
+
+let doc:any;
 
 export default async function DocPage({ params }: PageProps) {
   const { dashboard , techno} = await params;
@@ -24,11 +28,26 @@ export default async function DocPage({ params }: PageProps) {
     notFound();
   }
 
-  const doc = await res.json();
-  
+   doc = await res.json();
+
   if (!doc) notFound();
+
+
+  
 
   return (
     <Doc doc={doc} />
   );
+}
+
+
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
+  const { dashboard, techno } = await params;
+
+  return {
+    title: `${dashboard.toUpperCase()} Docs | ${techno}`,
+    description: `Documentation for ${techno} in ${dashboard}`,
+  };
 }
