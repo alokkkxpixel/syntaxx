@@ -51,7 +51,7 @@ export default function DashLayout({
             </Breadcrumb>
             <ModeToggle />
           </div> */}
-          <NavbarDemo />
+          <NavbarDemo showSidebarTrigger={true} />
         </header>
     
 

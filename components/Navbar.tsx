@@ -14,7 +14,7 @@ import { useState } from "react";
 import { ModeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from "./ui/sidebar";
 
-export function NavbarDemo() {
+export function NavbarDemo({ showSidebarTrigger = false }: { showSidebarTrigger?: boolean }) {
   const navItems = [
     {
       name: "Features",
@@ -50,6 +50,7 @@ export function NavbarDemo() {
         {/* Mobile Navigation */}
         <MobileNav>
           <MobileNavHeader>
+            {showSidebarTrigger && <SidebarTrigger />}
             <NavbarLogo />
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
