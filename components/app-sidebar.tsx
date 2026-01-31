@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
+
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
@@ -25,6 +25,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { useTech } from "@/context/TechContext"
 import { fetchTech } from "@/lib/fetchTech"
@@ -163,9 +164,12 @@ const data = {
 export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
    const {techs , loading} =  useTech();
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar className="" collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <SidebarTrigger />
+        
+        {/* <TeamSwitcher teams={data.teams} /> */}
+       
       </SidebarHeader>
       <SidebarContent>
       
@@ -175,7 +179,7 @@ export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
-      <SidebarRail />
+     
     </Sidebar>
   )
 }
