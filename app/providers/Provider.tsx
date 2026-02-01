@@ -5,6 +5,7 @@ import { TechProvider } from '@/context/TechContext'
 
 const Provider = ({children}: {children: React.ReactNode}) => {
   return (
+
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
@@ -12,8 +13,7 @@ const Provider = ({children}: {children: React.ReactNode}) => {
       disableTransitionOnChange
     >
       <TechProvider>
-
-      {children}
+        {children}
       </TechProvider>
     </ThemeProvider>
   )

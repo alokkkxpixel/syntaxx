@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import {
   Navbar,
   NavBody,
@@ -14,7 +15,7 @@ import { Activity, useState } from "react";
 import { ModeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from "./ui/sidebar";
 
-export function NavbarDemo({ showSidebarTrigger = false }: { showSidebarTrigger?: boolean }) {
+export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
     {
       name: "Features",
@@ -34,7 +35,7 @@ export function NavbarDemo({ showSidebarTrigger = false }: { showSidebarTrigger?
 
   return (
     <div className="relative w-full">
-      <Navbar className="fixed">
+      <Navbar className={cn("fixed", className)}>
         {/* Desktop Navigation */}
         <NavBody visible={true}>
     

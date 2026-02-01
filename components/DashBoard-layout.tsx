@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
-import FooterSection from "@/components/FooterSection"
+
 import { ModeToggle } from "@/components/ThemeToggle"
 import {
   Breadcrumb,
@@ -63,7 +63,7 @@ export default function DashLayout({
 
     <div className="flex bg-red py-20 items-">
 
-    <FooterSection />
+    
     </div>
     </>
   )
