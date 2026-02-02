@@ -6,15 +6,13 @@ export async function GET(req: Request, {params}:{params:{tech:string}}) {
     try {
          const { tech} = await params;
          console.log(tech)
-         const doc = await prisma.doc.findMany({
+         const findTech = await prisma.tech.findUnique({
             where:{
-                tech:{
-                 slug:tech
+                slug:tech
                 }                    
-                           
-            }
-     } )
-         return NextResponse.json(doc)
+            })
+     
+         return NextResponse.json(findTech)
     } catch (err) {
         console.error(err);
         return NextResponse.json(

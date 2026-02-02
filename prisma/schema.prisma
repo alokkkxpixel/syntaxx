@@ -13,8 +13,8 @@ model Tech {
   slug      String   @unique
   createdAt DateTime @default(now())
   docs      Doc[]
-  title     String?
-  description String?
+  title     String    
+  description String
 }
 
 model Doc {
