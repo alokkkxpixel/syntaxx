@@ -3,6 +3,7 @@ import { TechStackCard } from "./tech-stack-card"
 const techStacks = [
   {
     title: "Node.js",
+    slug: "nodejs",
     description: "Build scalable network applications with JavaScript runtime. Access file systems, create servers, and handle async operations efficiently.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#68A063]">
@@ -12,6 +13,7 @@ const techStacks = [
   },
   {
     title: "React",
+    slug:"react",
     description: "Create interactive UIs with component-based architecture. Master hooks, state management, and JSX syntax for modern web applications.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#61DAFB]">
@@ -21,6 +23,8 @@ const techStacks = [
   },
   {
     title: "MongoDB",
+    slug:"mongodb",
+
     description: "Store and query flexible JSON-like documents. Learn aggregation pipelines, indexing strategies, and data modeling patterns.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#47A248]">
@@ -30,6 +34,8 @@ const techStacks = [
   },
   {
     title: "PostgreSQL",
+    slug:"postgresql",
+
     description: "The world's most advanced open source relational database. Trusted for its reliability and performance in managing complex data sets.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#336791]">
@@ -39,6 +45,7 @@ const techStacks = [
   },
   {
     title: "Prisma",
+    slug:"prisma",
     description: "Next-generation ORM for Node.js and TypeScript. Simplifies database access with an auto-generated and type-safe query builder.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-[#2D3748] dark:fill-white">
@@ -48,6 +55,7 @@ const techStacks = [
   },
   {
     title: "Next.js",
+    slug:"nextjs",
     description: "The React framework for production. Features server-side rendering, static site generation, and powerful routing features out of the box.",
     icon: (
       <svg viewBox="0 0 24 24" className="w-6 h-6 fill-black dark:fill-white">
@@ -69,6 +77,7 @@ export function TechStacksSection() {
             <TechStackCard
               key={stack.title}
               title={stack.title}
+              slug={stack.slug}
               description={stack.description}
               icon={stack.icon}
             />
