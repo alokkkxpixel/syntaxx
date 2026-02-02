@@ -61,10 +61,7 @@ export default function DashLayout({
     
     </SidebarProvider>
 
-    <div className="flex bg-red py-20 items-">
-
-    
-    </div>
+   
     </>
   )
 }

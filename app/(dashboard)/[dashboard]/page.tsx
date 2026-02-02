@@ -11,10 +11,10 @@ const Page = () => {
   
   
 
- <DashLayout >
+
 
  <StaticDocs />
- </DashLayout>
+
 
     </div>
   )

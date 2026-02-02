@@ -13,6 +13,8 @@ model Tech {
   slug      String   @unique
   createdAt DateTime @default(now())
   docs      Doc[]
+  title     String?
+  description String?
 }
 
 model Doc {
@@ -37,6 +39,7 @@ model Doc {
 model CodeSnippet {
   id          String   @id @default(uuid())
   code        String
+  title       String?
   language    String
   filename    String?
   description String
