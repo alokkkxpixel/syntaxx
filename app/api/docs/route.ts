@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { title, description, tech, snippets, tags } = validation.data;
+    const { title, description, tech, snippets, tags ,} = validation.data;
 
     // 1️⃣ Find tech first (needed for unique slug check)
     const normalizedTech = generateSlug(tech);
@@ -66,6 +66,7 @@ const normalizedTags = tags.map((t: string) => ({
 
         snippets: {
           create: snippets.map((s: any) => ({
+            title:s.title,
             language: s.lang,
             code: s.code,
             description: s.description,
