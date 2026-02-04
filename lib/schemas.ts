@@ -4,6 +4,7 @@ export const CreateSnippetSchema = z.object({
   lang: z.string().min(1, "Snippet language is required"),
   code: z.string().min(1, "Snippet code is required"),
   title: z.string().optional().default(""),
+  icon: z.string().optional().default("filecode"),
   filename: z.string().optional().default(""),
   description: z.string().min(4, "Description must be at least 4 characters"),
 });

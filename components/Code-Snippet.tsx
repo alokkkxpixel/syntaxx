@@ -4,8 +4,10 @@ import { useTheme } from 'next-themes';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { toast } from "react-hot-toast"
+import IconRenderer from './icon';
 interface CodeSnippetProps {
   code: string;
+  icon: string;
   language?: string;
   filename?: string;
   showLineNumbers?: boolean;
@@ -13,8 +15,9 @@ interface CodeSnippetProps {
 
 export function SnippetsCode({ 
   code, 
+  icon,
   language = 'javascript', 
-  filename = 'code.js',
+  filename ,
   showLineNumbers = true 
 }: CodeSnippetProps) {
   const [copied, setCopied] = useState(false);
@@ -42,33 +45,33 @@ export function SnippetsCode({
     }
   };
 
-  const getFileIcon = (filename: string) => {
-    const ext = filename.split('.').pop()?.toLowerCase();
+  // const getFileIcon = (filename: string) => {
+  //   const ext = filename.split('.').pop()?.toLowerCase();
     
-    const icons: Record<string, string> = {
-      js: '📄',
-      jsx: '⚛️',
-      ts: '📘',
-      tsx: '⚛️',
-      html: '🌐',
-      css: '🎨',
-      json: '📋',
-      md: '📝',
-      py: '🐍',
-      java: '☕',
-      cpp: '⚙️',
-      c: '⚙️',
-      go: '🔷',
-      rs: '🦀',
-      php: '🐘',
-      rb: '💎',
-      sh: '🔧',
-      yml: '📄',
-      yaml: '📄',
-    };
+  //   const icons: Record<string, string> = {
+  //     js: '📄',
+  //     jsx: '⚛️',
+  //     ts: '📘',
+  //     tsx: '⚛️',
+  //     html: '🌐',
+  //     css: '🎨',
+  //     json: '📋',
+  //     md: '📝',
+  //     py: '🐍',
+  //     java: '☕',
+  //     cpp: '⚙️',
+  //     c: '⚙️',
+  //     go: '🔷',
+  //     rs: '🦀',
+  //     php: '🐘',
+  //     rb: '💎',
+  //     sh: '🔧',
+  //     yml: '📄',
+  //     yaml: '📄',
+  //   };
 
-    return icons[ext || ''] || '📄';
-  };
+  //   return icons[ext || ''] || '📄';
+  // };
 
   return (
     <div className="w-full rounded-lg overflow-hidden transition-all duration-300 bg-white dark:bg-[#1e1e1e] border border-gray-200 dark:border-white/10">
@@ -84,9 +87,13 @@ export function SnippetsCode({
           </div>
           
           {/* Filename with icon */}
-          <div className="flex items-center gap-1 min-w-0">
-            <span className="text-xs sm:text-sm flex-shrink-0">{getFileIcon(filename)}</span>
-            <span className="text-[10px] sm:text-xs font-medium truncate text-gray-700 dark:text-gray-300">
+          <div className="flex items-center gap-2 min-w-0">
+            <IconRenderer 
+              icon={icon} 
+              size={16} 
+              className="text-muted-foreground flex-shrink-0" 
+            />
+            <span className="text-[11px] sm:text-[15px] font-medium truncate text-muted-foreground">
               {filename}
             </span>
           </div>
@@ -94,7 +101,6 @@ export function SnippetsCode({
 
         {/* Right side - Copy button */}
         <div className="flex items-center gap-1 flex-shrink-0">
-          {/* Copy button */}
           <button
             onClick={handleCopy}
             className={`flex items-center gap-1 px-1.5 py-1 sm:px-2 sm:py-1 rounded text-[10px] sm:text-xs font-medium transition-all duration-200 ${

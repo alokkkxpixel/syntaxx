@@ -16,6 +16,7 @@ interface Snippet {
   id: string;
   language: string;
   code: string;
+  icon: string;
   title?: string;
   filename?: string;
   description: string;
@@ -129,7 +130,7 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
               
               <div className="relative">
                
-                <SnippetsCode   language={snippet.language}
+                <SnippetsCode  filename={snippet.filename} icon={snippet.icon} language={snippet.language}
                   code={snippet.code} showLineNumbers={true} />
                  
               </div>

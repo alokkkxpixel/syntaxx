@@ -69,6 +69,7 @@ const normalizedTags = tags.map((t: string) => ({
             title:s.title,
             language: s.lang,
             code: s.code,
+            icon: s.icon,
             description: s.description,
             filename: s.filename
           }))
