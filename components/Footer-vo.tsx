@@ -72,9 +72,11 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Syntaxx. All rights reserved.
             </p>
+            <a href="https://x.com/AlokkxPithale_?s=20">
             <p className="text-muted-foreground text-sm">
-              Made by <span className="text-foreground font-medium">@my name</span>
+              Made by <span className="text-foreground font-medium">@AlokkxPithale_</span>
             </p>
+            </a>
           </div>
         </div>
       </div>
