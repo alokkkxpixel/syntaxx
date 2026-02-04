@@ -2,11 +2,16 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CodeSnippet } from "@/components/CodeSnippet";
+
+import {SnippetsCode }  from "@/components/Code-Snippet";
+
+
+
+
 
 import { useState, useEffect } from "react";
 import { Metadata } from "next";
-
+import { CopyBlock,CodeBlock,dracula  } from "react-code-blocks";
 interface Snippet {
   id: string;
   language: string;
@@ -123,10 +128,10 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
               )}
               
               <div className="relative">
-                <CodeSnippet
-                  language={snippet.language}
-                  code={snippet.code}
-                />
+               
+                <SnippetsCode   language={snippet.language}
+                  code={snippet.code} showLineNumbers={true} />
+                 
               </div>
               
               {snippet.description && (
