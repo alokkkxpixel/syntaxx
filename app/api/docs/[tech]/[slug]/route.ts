@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { title } from "process";
 
 
 export async function GET(req: Request, {params}:{params:{tech:string,slug:string}}) {
@@ -25,22 +24,31 @@ const doc = await prisma.doc.findUnique({
   where: {
     techId_slug: {
       techId: techRecord.id,
-      slug
-    }
+      slug,
+    },
   },
   include: {
     snippets: true,
-    tags: true,
+    tags: {
+      include: {
+        tag: true,
+      },
+    },
     tech: true,
-    
-  }
+  },
 });
 
 if (!doc) {
   return NextResponse.json({ message: "Doc not found" }, { status: 404 });
 }
 
-return NextResponse.json(doc);
+// Flatten the tags to return just the tag records
+const formattedDoc = {
+  ...doc,
+  tags: doc.tags.map((dt) => dt.tag),
+};
+
+return NextResponse.json(formattedDoc);
 
     } catch (err) {
         console.error(err);

@@ -99,7 +99,13 @@ const normalizedTags = tags.map((t: string) => ({
       }
     });
 
-    return NextResponse.json(doc, { status: 201 });
+    // Flatten the tags for the response
+    const formattedDoc = {
+      ...doc,
+      tags: doc.tags.map(dt => dt.tag)
+    };
+
+    return NextResponse.json(formattedDoc, { status: 201 });
 
   } catch (err) {
     console.error(err);
