@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
-
+import { toast } from "react-hot-toast"
 interface CodeSnippetProps {
   code: string;
   language?: string;
@@ -35,6 +35,7 @@ export function SnippetsCode({
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      toast.success("Code copied to clipboard")
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
