@@ -14,6 +14,8 @@ import {
 import { Activity, useState } from "react";
 import { ModeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from "./ui/sidebar";
+import { DocSearch } from "./SearchComponent";
+import { Search } from "lucide-react";
 
 export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
@@ -32,6 +34,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <div className="relative w-full">
@@ -42,11 +45,27 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
 
           <NavbarLogo />
           <NavItems items={navItems} />
-          <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Login</NavbarButton>
-            <NavbarButton variant="secondary"><ModeToggle /></NavbarButton>
+
+
+          <div className="flex justify-end items-center gap-2">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground border rounded-md hover:bg-accent transition-colors hidden md:flex lg:min-w-[150px] xl:min-w-[220px]"
+            >
+              <Search className="h-4 w-4 shrink-0" />
+              <span className="hidden lg:inline-block">Search docs...</span>
+              <kbd className="ml-auto pointer-events-none hidden xl:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </button>
+            <NavbarButton variant="secondary" className="font-bold">Login</NavbarButton>
+            <NavbarButton variant="secondary" className="p-0"><ModeToggle /></NavbarButton>
           </div>
+         
         </NavBody>
+      </Navbar>
+      <DocSearch open={isSearchOpen} setOpen={setIsSearchOpen} />
+
 
         {/* Mobile Navigation */}
         <MobileNav>
@@ -56,10 +75,19 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
             </Activity>
           
             <NavbarLogo />
-            <MobileNavToggle
-              isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="p-2 text-muted-foreground hover:bg-accent rounded-md lg:hidden"
+                aria-label="Search"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+              <MobileNavToggle
+                isOpen={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              />
+            </div>
           </MobileNavHeader>
 
           <MobileNavMenu
@@ -78,6 +106,17 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
             ))}
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsSearchOpen(true);
+                }}
+                variant="secondary"
+                className="w-full flex items-center justify-start gap-2"
+              >
+                <Search className="h-4 w-4" />
+                Search
+              </NavbarButton>
+              <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"
@@ -94,7 +133,6 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
             </div>
           </MobileNavMenu>
         </MobileNav>
-      </Navbar>
       {/* <DummyContent /> */}
 
       {/* Navbar */}
