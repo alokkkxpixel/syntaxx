@@ -43,14 +43,16 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
         <NavBody visible={true}>
     
 
-          <NavbarLogo />
+          <div className="flex-1">
+            <NavbarLogo />
+          </div>
+
           <NavItems items={navItems} />
 
-
-          <div className="flex justify-end items-center gap-2">
+          <div className="flex-1 flex justify-end items-center gap-2">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground border rounded-md hover:bg-accent transition-colors hidden md:flex lg:min-w-[150px] xl:min-w-[220px]"
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground border rounded-md hover:bg-accent transition-colors hidden md:flex lg:min-w-[150px] xl:min-w-[230px]"
             >
               <Search className="h-4 w-4 shrink-0" />
               <span className="hidden lg:inline-block">Search docs...</span>
@@ -105,7 +107,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
+              {/* <NavbarButton
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   setIsSearchOpen(true);
@@ -115,7 +117,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
               >
                 <Search className="h-4 w-4" />
                 Search
-              </NavbarButton>
+              </NavbarButton> */}
               <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"

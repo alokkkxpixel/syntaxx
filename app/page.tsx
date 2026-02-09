@@ -24,7 +24,7 @@ export default function Home() {
         /> */}
       </div>
     
-      <NavbarDemo className="bg-white/10 dark:bg-black/10 backdrop-blur-md border-b border-white/5" />
+      <NavbarDemo className="bg-white/10 flex justify-center  items-center  p-4 dark:bg-black/10 backdrop-blur-md border-b border-white/5" />
 
      <main>
       <HeroSection />
