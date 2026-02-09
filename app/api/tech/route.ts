@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     }
 
     const tech = await prisma.tech.create({
-      data: { name, slug }
+      data: { name, slug, title: name, description: name }
     });
 
     return NextResponse.json(tech, { status: 201 });
