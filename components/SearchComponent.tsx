@@ -87,13 +87,19 @@ export function DocSearch({ open, setOpen }: { open: boolean, setOpen: (open: bo
   if (!mounted) return null
 
   return (
-    <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
+    <CommandDialog 
+      open={open} 
+      onOpenChange={setOpen} 
+      shouldFilter={false}
+      className="sm:top-24 sm:translate-y-0 top-auto bottom-0 translate-y-0 left-0 translate-x-0 sm:left-[50%] sm:translate-x-[-50%] max-w-full sm:max-w-2xl h-[70vh] min-h-[70vh] sm:min-h-0 sm:h-auto duration-300 rounded-b-none sm:rounded-xl data-[state=open]:slide-in-from-bottom-full sm:data-[state=open]:slide-in-from-top-8 sm:data-[state=open]:zoom-in-95 group"
+    >
       <CommandInput 
         placeholder="Type a command or search documentation..." 
         value={query}
         onValueChange={setQuery}
+        className="text-base sm:text-lg"
       />
-      <CommandList className="max-h-[650px]">
+      <CommandList className="flex-1 h-full max-h-none sm:max-h-[600px] overflow-y-auto">
         {loading && <div className="p-4 text-sm text-center text-muted-foreground">Searching...</div>}
         
         {/* Default Suggestions displayed when query is empty */}

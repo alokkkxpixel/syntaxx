@@ -11,7 +11,7 @@ export default function Home() {
     <div className="relative min-h-screen">
       {/* Prism Background */}
       <div className="fixed inset-0 -z-10 h-full w-full pointer-events-none">
-        {/* <Prism
+        <Prism
          animationType="rotate"
     timeScale={0.5}
     height={3.5}
@@ -21,7 +21,7 @@ export default function Home() {
     colorFrequency={3.75}
     noise={0}
     glow={.5}
-        /> */}
+        />
       </div>
     
       <NavbarDemo className="bg-white/10 flex justify-center  items-center  p-4 dark:bg-black/10 backdrop-blur-md border-b border-white/5" />
