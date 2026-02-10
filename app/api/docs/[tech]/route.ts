@@ -9,7 +9,18 @@ export async function GET(req: Request, {params}:{params:{tech:string}}) {
          const findTech = await prisma.tech.findUnique({
             where:{
                 slug:tech
-                }                    
+                },
+            include: {
+                docs: {
+                    select: {
+                        id: true,
+                        title: true,
+                        slug: true,
+                        description: true,
+                    },
+                    take: 6
+                }
+            }                    
             })
      
          return NextResponse.json(findTech)

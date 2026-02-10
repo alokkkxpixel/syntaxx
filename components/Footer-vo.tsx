@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { Tooltip } from "./ui/tooltip-card";
+
 export function Footer() {
   return (
     <footer className=" dark:bg-black/80 border-t border-border" >
@@ -72,14 +75,49 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Syntaxx. All rights reserved.
             </p>
+            <Tooltip
+          containerClassName="text-neutral-600 dark:text-neutral-400"
+          content={<TestimonialCard />}
+        >
+
             <a href="https://x.com/AlokkxPithale_?s=20">
             <p className="text-muted-foreground text-sm">
               Made by <span className="text-foreground font-medium">@AlokkxPithale_</span>
             </p>
             </a>
+
+        </Tooltip>
           </div>
         </div>
       </div>
     </footer>
   )
 }
+
+
+const TestimonialCard = () => {
+  return (
+    <div className="">
+      <blockquote className="mb-4 text-neutral-700 dark:text-neutral-300">
+        This product is absolutely, grade A horse shit.
+      </blockquote>
+      <div className="flex items-center gap-2">
+        <Image
+          height={40}
+          width={40}
+          src="https://pbs.twimg.com/profile_images/1968376344791891972/mUyMX_D2_400x400.jpg"
+          alt="Alokk Pithale"
+          className="size-6 rounded-full object-cover"
+        />
+        <div>
+          <p className="text-xs font-semibold text-neutral-900 dark:text-neutral-100">
+            Alokk Pithale
+          </p>
+          <p className="text-[10px] text-neutral-600 dark:text-neutral-400">
+          Freelance Developer
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};

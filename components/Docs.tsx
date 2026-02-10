@@ -2,8 +2,15 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
-import {SnippetsCode }  from "@/components/Code-Snippet";
+import Link from "next/link";
+import { ArrowRight, FileText } from "lucide-react";
+import { SnippetsCode } from "@/components/Code-Snippet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 
 
@@ -30,6 +37,7 @@ interface Tag {
 interface Doc {
   id: string;
   title: string;
+  slug: string;
   description?: string;
   content?: string;
   snippets: Snippet[];
@@ -43,6 +51,7 @@ interface Tech {
   title?: string;
   description?: string;
   icon?: string;
+  docs?: Doc[];
 }
 
 
@@ -102,7 +111,7 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
 
   if (doc && !Array.isArray(doc) && doc.snippets) {
     return (
-      <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 overflow-hidden transition-all duration-500 ease-in-out">
+      <article className="w-full max-w-3xl  mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 overflow-hidden transition-all duration-500 ease-in-out">
         {/* Header */}
         <header className="space-y-4 w-full overflow-hidden">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance break-words bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
@@ -242,16 +251,76 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
 
         <Separator className="my-8 opacity-30" />
 
-        <section className="space-y-6">
+        <section className="space-y-8">
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Available Documentation</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Documentation Guides</h2>
             <p className="text-muted-foreground text-lg">
-              Explore the detailed guides and examples for {activeTech.name} from the sidebar navigation.
+              Quickly jump into {activeTech.name} guides and best practices.
             </p>
           </div>
-          <div className="p-8 rounded-2xl border border-dashed border-border/60 bg-muted/30 text-center space-y-3">
-            <p className="text-muted-foreground">Select a topic to start learning</p>
-          </div>
+          
+          {activeTech.docs && activeTech.docs.length > 0 ? (
+            <>
+              {/* Desktop Grid View */}
+              <div className="hidden sm:grid grid-cols-2 gap-4">
+                {activeTech.docs.slice(0, 5).map((d) => (
+                  <Link 
+                    key={d.id} 
+                    href={`/${activeTech.slug}/${d.slug}`}
+                    className="group relative p-5 rounded-xl border border-border/40 bg-secondary/10 hover:bg-secondary/20 hover:border-primary/30 transition-all duration-300 flex flex-col gap-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-blue-500" />
+                        <h4 className="font-semibold group-hover:text-primary transition-colors">{d.title}</h4>
+                      </div>
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    </div>
+                    {d.description && (
+                      <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                        {d.description}
+                      </p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Mobile Accordion View */}
+              <div className="sm:hidden border rounded-xl overflow-hidden bg-secondary/5">
+                <Accordion type="single" collapsible className="w-full">
+                  {activeTech.docs.slice(0, 5).map((d, i) => (
+                    <AccordionItem key={d.id} value={`item-${i}`} className="px-4 border-b-border/40 last:border-0">
+                      <AccordionTrigger className="hover:no-underline py-5 group">
+                        <div className="flex items-center gap-3">
+                          <FileText className="w-4 h-4 text-blue-500" />
+                          <span className="font-medium text-left">{d.title}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-5">
+                        <div className="space-y-4">
+                          {d.description && (
+                            <p className="text-muted-foreground leading-relaxed">
+                              {d.description}
+                            </p>
+                          )}
+                          <Link 
+                            href={`/${activeTech.slug}/${d.slug}`}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-500 hover:text-blue-600 transition-colors"
+                          >
+                            Read Full Guide <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </>
+          ) : (
+            <div className="p-8 rounded-2xl border border-dashed border-border/60 bg-muted/30 text-center space-y-3">
+              <p className="text-muted-foreground">Select a topic from the sidebar to start learning</p>
+            </div>
+          )}
         </section>
       </article>
     );
