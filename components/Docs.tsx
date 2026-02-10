@@ -111,7 +111,7 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
 
   if (doc && !Array.isArray(doc) && doc.snippets) {
     return (
-      <article className="w-full max-w-3xl  mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 overflow-hidden transition-all duration-500 ease-in-out">
+      <article className="w-full max-w-3xl   mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10 overflow-hidden transition-all duration-500 ease-in-out">
         {/* Header */}
         <header className="space-y-4 w-full overflow-hidden">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-balance break-words bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">

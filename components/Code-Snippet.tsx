@@ -130,7 +130,7 @@ export function SnippetsCode({
 
       {/* Code content with minimal scrollbar inside */}
       <div 
-        className="overflow-x-auto custom-scrollbar-light dark:custom-scrollbar-dark"
+        className="overflow-x-auto overflow-y-auto max-h-[500px] custom-scrollbar-light dark:custom-scrollbar-dark"
         style={{
           scrollbarWidth: 'thin',
           scrollbarColor: isDark ? '#4a4a4a transparent' : '#aaa transparent',

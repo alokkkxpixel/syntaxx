@@ -123,3 +123,34 @@
     @apply bg-background text-foreground;
   }
 }
+@layer utilities {
+  .custom-scrollbar-light::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar-light::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar-light::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+  }
+  .custom-scrollbar-light::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+  }
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+}
