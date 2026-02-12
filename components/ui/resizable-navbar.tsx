@@ -234,7 +234,7 @@ export const NavbarLogo = () => {
       className="relative z-20 sm:mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal "
     >
       
-      <span className="font-semibold text-lg text-black dark:text-white">Syntaxx</span>
+      <span className="font-semibold text-xl text-black dark:text-white">Syntaxx</span>
     </Link>
     </>
   );

@@ -20,16 +20,16 @@ import { Search } from "lucide-react";
 export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
     {
-      name: "Features",
-      link: "#features",
+      name: "About Us",
+      link: "/about",
     },
     {
-      name: "Pricing",
-      link: "#pricing",
+      name: "Explore Techs",
+      link: "#Tech",
     },
     {
-      name: "Contact",
-      link: "#contact",
+      name: "Connect with us",
+      link: "https://x.com/AlokkxPithale_",
     },
   ];
 

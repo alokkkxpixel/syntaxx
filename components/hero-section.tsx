@@ -39,7 +39,7 @@ export function HeroSection() {
           </span>
         </h1>
         
-        <p className="mt-6 text-lg sm:text-xl text-black dark:text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed font-medium">
+        <p className="mt-6 text-sm sm:text-lg  tracking-tighter  text-black dark:text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed sm:font-medium">
           Your one-stop resource for finding syntax, documentation, and code snippets across all popular tech stacks. Professional, efficient, and ready to ship.
         </p>
         

@@ -38,12 +38,6 @@ const techStacks: TechStack[] = [
     icon: <ICONS.node className="w-10 h-10 text-[#339933]" />,
   },
   {
-    title: "Tailwind CSS",
-    slug: "tailwind",
-    description: "Utility-first CSS framework for rapid and responsive UI development.",
-    icon: <ICONS.tailwind className="w-10 h-10 text-[#06B6D4]" />,
-  },
-  {
     title: "PostgreSQL",
     slug: "postgresql",
     description: "Powerful, open-source object-relational database system.",
@@ -60,6 +54,12 @@ const techStacks: TechStack[] = [
     slug: "django",
     description: "High-level Python web framework for rapid development and clean design.",
     icon: <ICONS.django className="w-10 h-10 text-[#092E20]" />,
+  },
+  {
+    title: "Tailwind CSS",
+    slug: "tailwind",
+    description: "Utility-first CSS framework for rapid and responsive UI development.",
+    icon: <ICONS.tailwind className="w-10 h-10 text-[#06B6D4]" />,
   },
   {
     title: "MongoDB",
