@@ -26,8 +26,8 @@ export default function Home() {
         /> */}
       </div>
 
-      {/* Scrolling Background Overlay to fade out Prism effect */}
-      <div className="absolute inset-x-0 top-0 h-full w-full pointer-events-none -z-10 bg-gradient-to-b from-transparent via-black/40 via-[800px] to-black" />
+      {/* Scrolling Background Overlay to fade out Prism effect - only in dark mode */}
+      <div className="absolute inset-x-0 top-0 h-full w-full pointer-events-none -z-10 bg-gradient-to-b from-transparent via-transparent dark:via-black/40 via-[800px] dark:to-black" />
     
       <NavbarDemo className="bg-white/10 flex justify-center  items-center  p-4 dark:bg-black/10 backdrop-blur-md border-b border-white/5" />
 
