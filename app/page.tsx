@@ -21,7 +21,7 @@ export default function Home() {
           hueShift={0}
           colorFrequency={3.75}
           noise={0}
-          glow={0.3}
+          glow={0.5}
           bloom={0.5}
         /> */}
       </div>
