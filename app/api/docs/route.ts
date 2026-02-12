@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateSlug } from "@/lib/slug";
-import { CreateDocSchema } from "@/lib/schemas";
+import { CreateDocBulkSchema, CreateSnippetSchema } from "@/lib/schemas";
 import { z } from "zod";
+
+interface PreparedDoc {
+  title: string;
+  baseSlug: string;
+  description: string;
+  techId: string;
+  snippets: z.infer<typeof CreateSnippetSchema>[];
+  tags: string[];
+}
 
 export async function POST(req: Request) {
   try {
     const json = await req.json();
-    const validation = CreateDocSchema.safeParse(json);
+    const validation = CreateDocBulkSchema.safeParse(json);
 
     if (!validation.success) {
       return NextResponse.json(
@@ -19,100 +28,121 @@ export async function POST(req: Request) {
       );
     }
 
-    const { title, description, tech, snippets, tags ,} = validation.data;
+    const data = validation.data;
+    const docsToCreate = Array.isArray(data) ? data : [data];
 
-    // 1️⃣ Find tech first (needed for unique slug check)
-    const normalizedTech = generateSlug(tech);
-    const techRow = await prisma.tech.findUnique({
-      where: { slug: normalizedTech }
-    });
+    // Map through documents to handle logic before the transaction
+    // This avoids long-running transactions and potential async issues inside them
+    const preparedDocs: PreparedDoc[] = [];
 
-    if (!techRow) {
-      return NextResponse.json(
-        { error: "Invalid tech" },
-        { status: 400 }
-      );
-    }
-    
+    for (const item of docsToCreate) {
+      const { title, description, tech, snippets, tags } = item;
+      const normalizedTech = generateSlug(tech);
+      
+      const techRow = await prisma.tech.findUnique({
+        where: { slug: normalizedTech }
+      });
 
-    // 2️⃣ Generate unique slug from TITLE (unique per tech)
-    let baseSlug = generateSlug(title);
-    let slug = baseSlug;
-    let count = 1;
+      if (!techRow) {
+        return NextResponse.json(
+          { error: `Invalid tech: ${tech}` },
+          { status: 400 }
+        );
+      }
 
-    while (await prisma.doc.findUnique({ 
-      where: { 
-        techId_slug: {
-          techId: techRow.id,
-          slug: slug
-        }
-      } 
-    })) {
-      slug = `${baseSlug}-${count++}`;
-    }
-
-const normalizedTags = tags.map((t: string) => ({
-  name: t,
-  slug: generateSlug(t)
-}));
-
-    // 3️⃣ Create doc
-    const doc = await prisma.doc.create({
-      data: {
+      // Generate base slug
+      let baseSlug = generateSlug(title);
+      preparedDocs.push({
         title,
-        slug,
+        baseSlug,
         description,
         techId: techRow.id,
+        snippets,
+        tags
+      });
+    }
 
-        snippets: {
-          create: snippets.map((s: any) => ({
-            title:s.title,
-            language: s.lang,
-            code: s.code,
-            icon: s.icon,
-            description: s.description,
-            filename: s.filename
-          }))
-        },
+    // Now run the creation in a transaction
+    const createdDocs = await prisma.$transaction(async (tx) => {
+      const results = [];
 
-        tags: {
-          create: tags.map((tag: string) => {
-            const tagSlug = generateSlug(tag);
-            return {
-              tag: {
-                connectOrCreate: {
-                  where: { slug: tagSlug },
-                  create: {
-                    name: tag,
-                    slug: tagSlug
-                  }
-                }
-              }
-            };
-          })
+      for (const item of preparedDocs) {
+        // Unique slug check inside transaction to prevent race conditions
+        let slug = item.baseSlug;
+        let count = 1;
+
+        while (await tx.doc.findUnique({ 
+          where: { 
+            techId_slug: {
+              techId: item.techId,
+              slug: slug
+            }
+          } 
+        })) {
+          slug = `${item.baseSlug}-${count++}`;
         }
-      },
-      include: {
-        tech: true,
-        snippets: true,
-        tags: { include: { tag: true } }
+
+        const doc = await tx.doc.create({
+          data: {
+            title: item.title,
+            slug,
+            description: item.description,
+            techId: item.techId,
+            snippets: {
+              create: item.snippets.map((s) => ({
+                title: s.title,
+                language: s.lang,
+                code: s.code,
+                icon: s.icon,
+                description: s.description,
+                filename: s.filename
+              }))
+            },
+            tags: {
+              create: item.tags.map((tag: string) => {
+                const tagSlug = generateSlug(tag);
+                return {
+                  tag: {
+                    connectOrCreate: {
+                      where: { slug: tagSlug },
+                      create: {
+                        name: tag,
+                        slug: tagSlug
+                      }
+                    }
+                  }
+                };
+              })
+            }
+          },
+          include: {
+            tech: true,
+            snippets: true,
+            tags: { include: { tag: true } }
+          }
+        });
+
+        results.push({
+          ...doc,
+          tags: doc.tags.map(dt => dt.tag)
+        });
       }
+
+      return results;
+    }, {
+      timeout: 15000 // Increase timeout to 15s for bulk operations
     });
 
-    // Flatten the tags for the response
-    const formattedDoc = {
-      ...doc,
-      tags: doc.tags.map(dt => dt.tag)
-    };
-
-    return NextResponse.json(formattedDoc, { status: 201 });
-
-  } catch (err) {
-    console.error(err);
     return NextResponse.json(
-      { error: "Internal server error" },
+      Array.isArray(data) ? createdDocs : createdDocs[0], 
+      { status: 201 }
+    );
+
+  } catch (err: any) {
+    console.error("Bulk Creation Error:", err);
+    return NextResponse.json(
+      { error: "Internal server error", message: err.message },
       { status: 500 }
     );
   }
 }
-

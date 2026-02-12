@@ -17,4 +17,9 @@ export const CreateDocSchema = z.object({
   tags: z.array(z.string()).optional().default([]),
 });
 
+export const CreateDocBulkSchema = z.union([
+  CreateDocSchema,
+  z.array(CreateDocSchema)
+]);
+
 export type CreateDocInput = z.infer<typeof CreateDocSchema>;
