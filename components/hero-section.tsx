@@ -1,7 +1,9 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import Prism from "@/components/Prism";
+import SplitText from "./SplitText";
 export function HeroSection() {
   return (
     <>
@@ -13,13 +15,23 @@ export function HeroSection() {
         {/* Previous Prism background (commented out by user) */}
         {/* <Prism ... /> */}
       </div>
-      
+       
     <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative">
+
       <div className="max-w-4xl mx-auto text-center z-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold tracking-widest uppercase mb-6 animate-fade-in">
+        {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold tracking-widest uppercase mb-6 animate-fade-in">
           <span>Production Ready Code</span>
+        </div> */}
+        <div className="mx-auto flex justify-center items-center text-lg max-w-lg py-5">
+          <SplitText
+            text="Welcome to Syntaxx, coders.👋"
+            className="text-2xl font-semibold text-center"
+            delay={30}
+            duration={0.8}
+
+          />
         </div>
-        
+         
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-neutral-900 dark:text-foreground text-balance leading-[1.1] mb-6">
           Find Every Tech Stack <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-600 to-primary/80">
@@ -27,7 +39,7 @@ export function HeroSection() {
           </span>
         </h1>
         
-        <p className="mt-6 text-lg sm:text-xl text-black dark:text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed font-bold">
+        <p className="mt-6 text-lg sm:text-xl text-black dark:text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed font-medium">
           Your one-stop resource for finding syntax, documentation, and code snippets across all popular tech stacks. Professional, efficient, and ready to ship.
         </p>
         
