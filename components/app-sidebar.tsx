@@ -6,10 +6,10 @@ import {
   BookOpen,
   Bot,
   Command,
-  Frame,
+ Twitter  ,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
+
+  Github ,
   Settings2,
   SquareTerminal,
 } from "lucide-react"
@@ -140,22 +140,18 @@ const data = {
       ],
     },
   ],
-  projects: [
+  FOllowForUpdates: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
+      name: "Twitter @AlokkxPithale",
+      url: "https://x.com/AlokkxPithale_",
+      icon: Twitter,
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
+      name: "Github Syntaxx",
+      url: "https://github.com/alokkkxpixel/Syntaxx",
+      icon: Github ,
     },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
+    
   ],
 }
 
@@ -174,7 +170,7 @@ export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
       <SidebarContent>
       
         <NavMain techs={techs} loading={loading} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.FOllowForUpdates} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
