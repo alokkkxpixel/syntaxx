@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
-import { SnippetsCode } from "@/components/Code-Snippet";
+import { CodeSnippet } from "@/components/CodeSnippet";
 import {
   Accordion,
   AccordionContent,
@@ -139,7 +139,7 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
               
               <div className="relative">
                
-                <SnippetsCode
+                <CodeSnippet
                   filename={snippet.filename || undefined}
                   icon={snippet.icon}
                   language={snippet.language}

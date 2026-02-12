@@ -7,13 +7,13 @@ import { toast } from "react-hot-toast"
 import IconRenderer from './icon';
 interface CodeSnippetProps {
   code: string;
-  icon: string;
+  icon?: string;
   language?: string;
   filename?: string;
   showLineNumbers?: boolean;
 }
 
-export function SnippetsCode({ 
+export function CodeSnippet({ 
   code, 
   icon,
   language = 'javascript', 
@@ -89,7 +89,7 @@ export function SnippetsCode({
           {/* Filename with icon */}
           <div className="flex items-center gap-2 min-w-0">
             <IconRenderer 
-              icon={icon} 
+              icon={icon || "filecode"} 
               size={16} 
               className="text-muted-foreground flex-shrink-0" 
             />
