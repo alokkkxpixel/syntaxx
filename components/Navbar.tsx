@@ -21,6 +21,10 @@ import { TestimonialCard } from "./Footer-vo";
 export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
     {
+      name: "Get Started",
+      link: "/getting-started",
+    },
+    {
       name: "About Us",
       link: "/about",
     },

@@ -44,12 +44,16 @@ export function HeroSection() {
         </p>
         
         <div className="mt-10 sm:mb-8 mb-20 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" className="px-8 h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all">
-            Get Started
-          </Button>
-          <Button variant="outline" size="lg" className="px-8 h-12 rounded-full bg-white dark:bg-transparent border-neutral-200 dark:border-neutral-800 font-bold hover:bg-neutral-50 dark:hover:bg-white/5 transition-all">
-            Learn More
-          </Button>
+          <Link href="/getting-started">
+            <Button size="lg" className="px-8 h-12 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all">
+              Get Started
+            </Button>
+          </Link>
+          <Link href="/getting-started">
+            <Button variant="outline" size="lg" className="px-8 h-12 rounded-full bg-white dark:bg-transparent border-neutral-200 dark:border-neutral-800 font-bold hover:bg-neutral-50 dark:hover:bg-white/5 transition-all">
+              Learn More
+            </Button>
+          </Link>
         </div>
         
         <Link href="#Tech">

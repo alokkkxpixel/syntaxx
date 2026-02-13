@@ -12,6 +12,7 @@ import {
   Github ,
   Settings2,
   SquareTerminal,
+  Rocket
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -19,6 +20,7 @@ import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
+import Link from "next/link"
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +28,11 @@ import {
   SidebarHeader,
   SidebarRail,
   SidebarTrigger,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar"
 import { useTech } from "@/context/TechContext"
 import { fetchTech } from "@/lib/fetchTech"
@@ -168,7 +175,20 @@ export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
        
       </SidebarHeader>
       <SidebarContent>
-      
+        <SidebarGroup>
+          <SidebarGroupLabel>Getting Started</SidebarGroupLabel>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/getting-started">
+                  <Rocket className="w-4 h-4" />
+                  <span>Introduction</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroup>
+        
         <NavMain techs={techs} loading={loading} />
         <NavProjects projects={data.FOllowForUpdates} />
       </SidebarContent>
