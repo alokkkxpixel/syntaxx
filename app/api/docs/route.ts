@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateSlug } from "@/lib/slug";
 import { CreateDocBulkSchema, CreateSnippetSchema } from "@/lib/schemas";
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
 interface PreparedDoc {
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
     }
 
     // Now run the creation in a transaction
-    const createdDocs = await prisma.$transaction(async (tx) => {
+    const createdDocs = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const results = [];
 
       for (const item of preparedDocs) {
