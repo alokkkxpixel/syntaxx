@@ -43,9 +43,60 @@ if (!doc) {
 }
 
 // Flatten the tags to return just the tag records
+const tags = doc.tags.map((dt) => dt.tag);
+const tagIds = tags.map((t) => t.id);
+
+// 3. Find related documents based on shared tags
+let relatedDocs = await prisma.doc.findMany({
+  where: {
+    id: { not: doc.id },
+    tags: {
+      some: {
+        tagId: { in: tagIds },
+      },
+    },
+  },
+  take: 4,
+  select: {
+    id: true,
+    title: true,
+    slug: true,
+    description: true,
+    tech: {
+      select: {
+        slug: true,
+      },
+    },
+  },
+});
+
+// 4. If few related docs found by tags, fallback to same tech
+if (relatedDocs.length < 2) {
+  const moreDocs = await prisma.doc.findMany({
+    where: {
+      id: { not: doc.id, notIn: relatedDocs.map(d => d.id) },
+      techId: doc.techId,
+    },
+    take: 4 - relatedDocs.length,
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      tech: {
+        select: {
+          slug: true,
+        },
+      },
+    },
+  });
+  relatedDocs = [...relatedDocs, ...moreDocs];
+}
+
 const formattedDoc = {
   ...doc,
-  tags: doc.tags.map((dt) => dt.tag),
+  tags,
+  relatedDocs,
 };
 
 return NextResponse.json(formattedDoc);

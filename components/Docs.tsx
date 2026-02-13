@@ -42,6 +42,15 @@ interface Doc {
   content?: string;
   snippets: Snippet[];
   tags: Tag[];
+  relatedDocs?: {
+    id: string;
+    title: string;
+    slug: string;
+    description?: string;
+    tech: {
+      slug: string;
+    };
+  }[];
 }
 
 interface Tech {
@@ -181,23 +190,65 @@ export default function StaticDoc({ doc,tech }: StaticDocProps) {
           </div>
         )}
 
-        {/* Next Steps */}
-        <section className="space-y-4 pt-4" aria-labelledby="tips">
-          <h2 id="tips" className="text-2xl font-bold tracking-tight">Next Steps</h2>
-          <Card className="border-l-4 border-l-blue-500 bg-blue-500/5 hover:bg-blue-500/10 transition-colors">
-            <CardContent className="pt-6">
-              <ul className="space-y-3 text-base sm:text-lg text-foreground/80">
-                <li className="flex gap-3">
-                  <span className="text-blue-500 font-bold">•</span>
-                  <span>Explore more examples in the documentation</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="text-blue-500 font-bold">•</span>
-                  <span>Try implementing these concepts in your project</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+        {/* Related Documents / Next Steps */}
+        <section className="space-y-6 pt-8" aria-labelledby="related-docs">
+          <div className="flex items-center justify-between">
+            <h2 id="related-docs" className="text-2xl font-bold tracking-tight">
+              {doc.relatedDocs && doc.relatedDocs.length > 0 ? "Related Documents" : "Next Steps"}
+            </h2>
+            {doc.relatedDocs && doc.relatedDocs.length > 0 && (
+              <div className="h-px flex-1 mx-4 bg-border/40 hidden sm:block" />
+            )}
+          </div>
+
+          {doc.relatedDocs && doc.relatedDocs.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {doc.relatedDocs.map((related) => (
+                <Link
+                  key={related.id}
+                  href={`/${related.tech.slug}/${related.slug}`}
+                  className="group block"
+                >
+                  <Card className="h-full border-border/40 bg-secondary/10 hover:bg-secondary/20 hover:border-blue-500/50 transition-all duration-300 shadow-sm overflow-hidden">
+                    <CardContent className="p-5 flex flex-col h-full">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-2 text-blue-500">
+                          <FileText className="w-4 h-4" />
+                          <span className="text-[10px] font-bold uppercase tracking-wider opacity-70">
+                            {related.tech.slug}
+                          </span>
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </div>
+                      <h3 className="font-bold text-lg group-hover:text-blue-500 transition-colors line-clamp-1 mb-1">
+                        {related.title}
+                      </h3>
+                      {related.description && (
+                        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                          {related.description}
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <Card className="border-l-4 border-l-blue-500 bg-blue-500/5 hover:bg-blue-500/10 transition-colors">
+              <CardContent className="pt-6">
+                <ul className="space-y-3 text-base sm:text-lg text-foreground/80">
+                  <li className="flex gap-3">
+                    <span className="text-blue-500 font-bold">•</span>
+                    <span>Explore more examples in the documentation</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-blue-500 font-bold">•</span>
+                    <span>Try implementing these concepts in your project</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          )}
         </section>
       </article>
     );
