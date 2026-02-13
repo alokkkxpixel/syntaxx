@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Tooltip } from "./ui/tooltip-card";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -17,17 +18,12 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-6">Product</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
+                <Link href="#Features" className="text-muted-foreground hover:text-foreground transition-colors">Features</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Documentation</a>
+                <Link href="/get-started" className="text-muted-foreground hover:text-foreground transition-colors">Documentation</Link>
               </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">API Reference</a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Changelog</a>
-              </li>
+            
             </ul>
           </div>
 
@@ -35,16 +31,16 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-6">Resources</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Blog</a>
+                <Link href="/nodejs" className="text-muted-foreground hover:text-foreground transition-colors">Node.js</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Tutorials</a>
+                <Link href="/typescript" className="text-muted-foreground hover:text-foreground transition-colors">TypeScript</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Community</a>
+                <Link href="/react" className="text-muted-foreground hover:text-foreground transition-colors">React</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Support</a>
+                <Link href="/nextjs" className="text-muted-foreground hover:text-foreground transition-colors">Next.js</Link>
               </li>
             </ul>
           </div>
@@ -53,17 +49,18 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-6">Company</h3>
             <ul className="space-y-4">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Careers</a>
+                <Link href="https://x.com/AlokkxPithale_?s=20" className="text-muted-foreground hover:text-foreground transition-colors">Connect With Me</Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
+                <Link href="https://github.com/alokkkxpixel" className="text-muted-foreground hover:text-foreground transition-colors">GitHub</Link>
               </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-              </li>
+              
+              
+             
+        
             </ul>
           </div>
         </div>
@@ -80,11 +77,11 @@ export function Footer() {
           content={<TestimonialCard />}
         >
 
-            <a href="https://x.com/AlokkxPithale_?s=20">
+            <Link href="https://x.com/AlokkxPithale_?s=20">
             <p className="text-muted-foreground text-sm">
               Made by <span className="text-foreground font-medium">@AlokkxPithale_</span>
             </p>
-            </a>
+            </Link>
 
         </Tooltip>
           </div>
