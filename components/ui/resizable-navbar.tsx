@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 
 import React, { useRef, useState } from "react";
+import { Tooltip } from "./tooltip-card";
 import { SidebarTrigger } from "./sidebar";
 import Link from "next/link";
 
@@ -28,6 +29,7 @@ interface NavItemsProps {
   items: {
     name: string;
     link: string;
+    content?: React.ReactNode;
   }[];
   className?: string;
   onItemClick?: () => void;
@@ -126,23 +128,34 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         className,
       )}
     >
-      {items.map((item, idx) => (
-        <a
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-          key={`link-${idx}`}
-          href={item.link}
-        >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-            />
-          )}
-          <span className="relative z-20">{item.name}</span>
-        </a>
-      ))}
+      {items.map((item, idx) => {
+        const navItem = (
+          <a
+            onMouseEnter={() => setHovered(idx)}
+            onClick={onItemClick}
+            className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+            href={item.link}
+          >
+            {hovered === idx && (
+              <motion.div
+                layoutId="hovered"
+                className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+              />
+            )}
+            <span className="relative z-20">{item.name}</span>
+          </a>
+        );
+
+        if (item.content) {
+          return (
+            <Tooltip key={`link-${idx}`} content={item.content}>
+              {navItem}
+            </Tooltip>
+          );
+        }
+
+        return <React.Fragment key={`link-${idx}`}>{navItem}</React.Fragment>;
+      })}
     </motion.div>
   );
 };

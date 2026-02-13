@@ -95,7 +95,7 @@ export function Footer() {
 }
 
 
-const TestimonialCard = () => {
+export const TestimonialCard = () => {
   return (
     <div className="">
       <blockquote className="mb-4 text-neutral-700 dark:text-neutral-300">
@@ -105,7 +105,7 @@ const TestimonialCard = () => {
         <Image
           height={40}
           width={40}
-          src="https://pbs.twimg.com/profile_images/1968376344791891972/mUyMX_D2_400x400.jpg"
+          src="/Alok.jpg"
           alt="Alokk Pithale"
           className="size-6 rounded-full object-cover"
         />

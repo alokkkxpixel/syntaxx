@@ -16,6 +16,7 @@ import { ModeToggle } from "./ThemeToggle";
 import { SidebarTrigger } from "./ui/sidebar";
 import { DocSearch } from "./SearchComponent";
 import { Search } from "lucide-react";
+import { TestimonialCard } from "./Footer-vo";
 
 export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
@@ -30,6 +31,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
     {
       name: "Connect with us",
       link: "https://x.com/AlokkxPithale_",
+      content: <TestimonialCard />,
     },
   ];
 
