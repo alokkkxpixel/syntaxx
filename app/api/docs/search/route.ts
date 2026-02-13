@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
     if (terms.length > 1) {
       // If multi-word, search for (word1 & word2) OR combinedWord
       // Example: (node:* & js:*) | nodejs:*
-      const splitPart = terms.map(t => `${t}:*`).join(" & ");
+      const splitPart = terms.map((t: string) => `${t}:*`).join(" & ");
       searchTerms = `(${splitPart}) | ${combined}:*`;
     } else {
       // Single word search

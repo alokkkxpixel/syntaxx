@@ -89,7 +89,7 @@ export async function POST(req: Request) {
             description: item.description,
             techId: item.techId,
             snippets: {
-              create: item.snippets.map((s) => ({
+              create: item.snippets.map((s: any) => ({
                 title: s.title,
                 language: s.lang,
                 code: s.code,
@@ -124,7 +124,7 @@ export async function POST(req: Request) {
 
         results.push({
           ...doc,
-          tags: doc.tags.map(dt => dt.tag)
+          tags: doc.tags.map((dt: any) => dt.tag)
         });
       }
 
