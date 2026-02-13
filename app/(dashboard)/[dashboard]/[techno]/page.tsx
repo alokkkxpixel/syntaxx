@@ -1,39 +1,26 @@
 
+import { getDocByTechAndSlug } from "@/lib/docs";
 import Doc from "@/components/Docs";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     dashboard: string;
     techno: string;
     
-  };
+  }>;
 }
-
-
-let doc:any;
 
 export default async function DocPage({ params }: PageProps) {
   const { dashboard , techno} = await params;
-  // Use absolute URL for server-side fetch if necessary, 
-  // though it's better to call the database/logic directly in server components.
-  // For now, let's fix the response parsing.
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/docs/${dashboard}/${techno}`, {
-    cache: 'no-cache'
-  });
   
-  if (!res.ok) {
+  // Fetch directly from database (works during build time)
+  const doc = await getDocByTechAndSlug(dashboard, techno);
+
+  if (!doc) {
     notFound();
   }
-
-   doc = await res.json();
-
-  if (!doc) notFound();
-
-
-  
 
   return (
     <Doc doc={doc} />

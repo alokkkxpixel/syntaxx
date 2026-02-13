@@ -1,43 +1,28 @@
 
-
-import DashLayout from '@/components/DashBoard-layout'
-import StaticDocs from '@/components/HardCodedDocs'
+import { getTechWithDocs } from "@/lib/docs";
+import Doc from "@/components/Docs";
 import { notFound } from 'next/navigation';
 import React from 'react'
-import Doc from "@/components/Docs";
  
 interface PageProps {
-  params: {
+  params: Promise<{
     dashboard: string;
-  };
+  }>;
 }
 
-let docs:any;
-
 export default async function Page ({ params }: PageProps) {
-     const {dashboard} = await params;
+  const { dashboard } = await params;
+  
+  // Fetch directly from database
+  const tech = await getTechWithDocs(dashboard);
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-   const res = await fetch(`${baseUrl}/api/docs/${dashboard}`, {
-     cache: 'no-cache'
-   });
-   
-   if (!res.ok) {
-     notFound();
-   }
-
- docs = await res.json();
+  if (!tech) {
+    notFound();
+  }
 
   return (
     <div className='mx-auto max-w-7xl'>
-  
-  
-
-
-
- <Doc tech={docs} />
-
-
+      <Doc tech={tech} />
     </div>
   )
 }
