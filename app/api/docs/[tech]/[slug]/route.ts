@@ -2,7 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 
-export async function GET(req: Request, {params}:{params:{tech:string,slug:string}}) {
+export async function GET(
+  req: Request, 
+  { params }: { params: Promise<{ tech: string; slug: string }> }
+) {
     try {
         // /api/docs/[tech]/[slug].ts
 

@@ -1,7 +1,13 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, RecoilState } from "recoil";
 
-const useFetch = (url, recoilState) => {
+interface FetchState<T> {
+  data: T | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const useFetch = <T = any>(url: string | null, recoilState: RecoilState<FetchState<T>>) => {
   const setState = useSetRecoilState(recoilState);
 
   useEffect(() => {
@@ -23,7 +29,7 @@ const useFetch = (url, recoilState) => {
         setState({
           data: null,
           loading: false,
-          error: error.message,
+          error: error instanceof Error ? error.message : 'An error occurred',
         });
       }
     };
