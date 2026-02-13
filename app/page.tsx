@@ -13,7 +13,7 @@ export default function Home() {
     <div className="relative min-h-screen">
       {/* Prism Background */}
       <div className="fixed inset-0 -z-20 h-full w-full pointer-events-none overflow-hidden">
-        {/* <Prism
+        <Prism
           animationType="rotate"
           timeScale={0.5}
           height={3.5}
@@ -24,7 +24,7 @@ export default function Home() {
           noise={0}
           glow={0.5}
           bloom={0.5}
-        /> */}
+        />
       </div>
 
       {/* Scrolling Background Overlay to fade out Prism effect - only in dark mode */}
