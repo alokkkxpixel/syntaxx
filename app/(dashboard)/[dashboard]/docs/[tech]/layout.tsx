@@ -2,14 +2,15 @@ import Link from "next/link";
 import { docsConfig } from "@/components/content/docs";
 import { notFound } from "next/navigation";
 
-export default function TechLayout({
+export default async function TechLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { tech: string };
+  params: Promise<{ tech: string }>;
 }) {
-  const techConfig = docsConfig[params.tech as keyof typeof docsConfig];
+  const { tech } = await params;
+  const techConfig = docsConfig[tech as keyof typeof docsConfig];
 
   if (!techConfig) return notFound();
 
@@ -29,7 +30,7 @@ export default function TechLayout({
               {section.items.map((item) => (
                 <li key={item.slug}>
                   <Link
-                    href={`/dashboard/docs/${params.tech}/${item.slug}`}
+                    href={`/dashboard/docs/${tech}/${item.slug}`}
                     className="block rounded px-2 py-1 text-sm hover:bg-muted"
                   >
                     {item.label}
