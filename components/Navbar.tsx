@@ -17,6 +17,8 @@ import { SidebarTrigger } from "./ui/sidebar";
 import { DocSearch } from "./SearchComponent";
 import { Search } from "lucide-react";
 import { TestimonialCard } from "./Footer-vo";
+import { StickyBanner } from "./ui/sticky-banner";
+import Link from "next/link";
 
 export function NavbarDemo({ showSidebarTrigger = false, className }: { showSidebarTrigger?: boolean, className?: string }) {
   const navItems = [
@@ -69,7 +71,6 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
             <NavbarButton variant="secondary" className="font-bold">Login</NavbarButton>
             <NavbarButton variant="secondary" className="p-0"><ModeToggle /></NavbarButton>
           </div>
-         
         </NavBody>
       </Navbar>
       <DocSearch open={isSearchOpen} setOpen={setIsSearchOpen} />

@@ -4,6 +4,7 @@ import "./globals.css";
 import Provider from "@/app/providers/Provider";
 import { Footer } from "@/components/Footer-vo";
 import {Toaster} from "react-hot-toast";
+import { StickyBanner } from "@/components/ui/sticky-banner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -48,7 +49,9 @@ export default function RootLayout({
         >
         
         <Provider>  
-         <Toaster/>
+          <Toaster/>
+
+                  
           {children}
         </Provider>
          <Footer />

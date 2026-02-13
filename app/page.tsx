@@ -6,6 +6,7 @@ import { TechStacksSection } from "@/components/tech-stack-section";
 import { Footer } from "@/components/Footer-vo";
 import { SidebarInset } from "@/components/ui/sidebar";
 import CompareDemoSection from "@/components/CompareDemo";
+import { StickyBanner } from "@/components/ui/sticky-banner";
 
 export default function Home() {
   return (
@@ -30,7 +31,8 @@ export default function Home() {
       <div className="absolute inset-x-0 top-0 h-full w-full pointer-events-none -z-10 bg-gradient-to-b from-transparent via-transparent dark:via-black/40 via-[800px] dark:to-black" />
     
       <NavbarDemo className="bg-white/10 flex justify-center  items-center  p-4 dark:bg-black/10 backdrop-blur-md border-b border-white/5" />
-
+    
+     
      <main>
       <HeroSection />
       <CompareDemoSection />

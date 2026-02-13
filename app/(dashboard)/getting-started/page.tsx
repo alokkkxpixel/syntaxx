@@ -1,12 +1,18 @@
 "use client";
 
+import { useState } from "react";
+
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { CodeSnippet } from "@/components/CodeSnippet";
 import { Rocket, Search, Terminal, BookOpen, Layers, Zap } from "lucide-react";
 import Link from "next/link";
+import { StickyBanner } from "@/components/ui/sticky-banner";
+import { AnimatePresence } from "motion/react";
 
 export default function GettingStartedDoc() {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
   const techStacks = [
     { name: "React", category: "Frontend", status: "Available", slug: "react" },
     { name: "Next.js", category: "Fullstack", status: "Available", slug: "next-js" },
@@ -19,10 +25,26 @@ export default function GettingStartedDoc() {
   ];
 
   return (
-    <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      {/* Header */}
-      <header className="space-y-4">
-        <div className="flex items-center gap-2 text-blue-500 font-bold uppercase tracking-widest text-xs">
+    <div className="w-full">
+      <AnimatePresence>
+        {isBannerVisible && (
+          <StickyBanner 
+            className="bg-blue-600 w-full py-3 mb-6"
+            onClose={() => setIsBannerVisible(false)}
+          >
+            <p className="text-white text-sm sm:text-base font-medium text-center px-10">
+              Announcing $10M seed funding from project mayhem ventures.{" "}
+              <a href="#" className="underline underline-offset-4 hover:text-white/80 transition-colors">
+                Read announcement
+              </a>
+            </p>
+          </StickyBanner>
+        )}
+      </AnimatePresence>
+      <article className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+        {/* Header */}
+        <header className="space-y-4">
+          <div className="flex items-center gap-2 text-blue-500 font-bold uppercase tracking-widest text-xs">
           <Rocket className="w-4 h-4" />
           <span>Getting Started</span>
         </div>
@@ -155,6 +177,9 @@ export const SyntaxxInfo = {
           <span className="text-foreground font-bold italic">Syntaxx v1.0.0</span>
         </p>
       </footer>
-    </article>
+      </article>
+    </div>
   );
 }
+
+
