@@ -58,6 +58,7 @@ export async function GET(req: NextRequest) {
           },
         },
         take: 5,
+      //  cacheStrategy: { ttl: 60 },
       }),
       prisma.doc.findMany({
         where: {

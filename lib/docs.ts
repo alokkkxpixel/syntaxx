@@ -88,7 +88,7 @@ export async function getDocByTechAndSlug(techSlug: string, docSlug: string) {
 
   return {
     ...doc,
-    snippets: doc.snippets.map(s => ({
+    snippets: doc.snippets.map((s: any) => ({
       ...s,
       filename: s.filename || undefined
     })),
@@ -119,7 +119,7 @@ export async function getTechWithDocs(techSlug: string) {
 
   return {
     ...tech,
-    docs: tech.docs.map(doc => ({
+    docs: tech.docs.map((doc: any) => ({
       ...doc,
       snippets: [],
       tags: []
