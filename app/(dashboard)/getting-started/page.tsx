@@ -33,9 +33,9 @@ export default function GettingStartedDoc() {
             onClose={() => setIsBannerVisible(false)}
           >
             <p className="text-white text-sm sm:text-base font-medium text-center px-10">
-              Announcing $10M seed funding from project mayhem ventures.{" "}
-              <a href="#" className="underline underline-offset-4 hover:text-white/80 transition-colors">
-                Read announcement
+              AThis project is in early access.{" "}
+              <a href="https://x.com/AlokkxPithale_" className="underline underline-offset-4 hover:text-white/80 transition-colors">
+                 More docs coming soon.
               </a>
             </p>
           </StickyBanner>
