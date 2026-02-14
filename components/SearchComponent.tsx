@@ -58,7 +58,7 @@ export function DocSearch({ open, setOpen }: { open: boolean, setOpen: (open: bo
           signal: controller.signal
         })
         const data = await res.json()
-        console.log(data)
+        
         setResults(data)
       } catch (err) {
         if (err instanceof Error && err.name === 'AbortError') return
