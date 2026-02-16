@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import { redis } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
@@ -13,32 +16,39 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Prisma's search operator for PostgreSQL
-    // The query needs to be formatted for tsquery (e.g., 'word1 & word2')
-    // or we can use the 'search' property if fullTextSearchPostgres is enabled.
-    // Note: search operator expects words separated by & | ! etc or just words.
-    // We can join words with '&' for a 'contains all' behavior.
-    // Sanitize query
-    const rawQuery = query.trim();
-    // 1. Version with spaces: "node.js" -> "node js"
-    const withSpaces = rawQuery.replace(/[.+_-]/g, ' ').replace(/\s+/g, ' ');
-    // 2. Version without spaces: "node js" -> "nodejs"
-    const combined = rawQuery.replace(/[.+_\-\s]/g, '');
+    // Normalize query for cache key
+    const normalizedQuery = query.trim().toLowerCase();
+    const cacheKey = `search:tech-docs:q=${normalizedQuery}`;
 
-    const terms = withSpaces.split(' ').filter(Boolean);
-    
+    // 1️⃣ Redis first
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      // console.log("⚡ REDIS HIT", cacheKey);
+      return NextResponse.json(cached);
+    }
+    // console.log("🐌 DB HIT", cacheKey);
+    // -------------------------------
+    // 🔍 Your existing search logic
+    // -------------------------------
+    const rawQuery = query.trim();
+
+    const withSpaces = rawQuery
+      .replace(/[.+_-]/g, " ")
+      .replace(/\s+/g, " ");
+
+    const combined = rawQuery.replace(/[.+_\-\s]/g, "");
+
+    const terms = withSpaces.split(" ").filter(Boolean);
+
     let searchTerms = "";
     if (terms.length > 1) {
-      // If multi-word, search for (word1 & word2) OR combinedWord
-      // Example: (node:* & js:*) | nodejs:*
-      const splitPart = terms.map((t: string) => `${t}:*`).join(" & ");
+      const splitPart = terms.map((t) => `${t}:*`).join(" & ");
       searchTerms = `(${splitPart}) | ${combined}:*`;
     } else {
-      // Single word search
       searchTerms = `${terms[0]}:*`;
     }
 
-    // Search both Tech and Doc models in parallel
+    // 2️⃣ Prisma search (parallel)
     const [techs, docs] = await Promise.all([
       prisma.tech.findMany({
         where: {
@@ -58,8 +68,8 @@ export async function GET(req: NextRequest) {
           },
         },
         take: 5,
-      //  cacheStrategy: { ttl: 60 },
       }),
+
       prisma.doc.findMany({
         where: {
           OR: [
@@ -79,12 +89,20 @@ export async function GET(req: NextRequest) {
       }),
     ]);
 
-    return NextResponse.json({
+    const response = {
       techs,
       docs,
       totalTechs: techs.length,
       totalDocs: docs.length,
-    });
+    };
+
+    // 3️⃣ Cache ONLY if results exist
+    if (techs.length > 0 || docs.length > 0) {
+      await redis.set(cacheKey, response, { ex: 300 }); // 5 minutes
+    }
+
+    return NextResponse.json(response);
+
   } catch (error: any) {
     console.error("Search error:", error);
     return NextResponse.json(

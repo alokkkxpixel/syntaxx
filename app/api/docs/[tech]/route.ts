@@ -41,7 +41,7 @@ if (cached) {
             }                    
             })
 
-            await redis.set(cacheKey, findTech, { ex: 3000 });
+            await redis.set(cacheKey, findTech, { ex: 60 });
      
          return NextResponse.json(findTech)
     } catch (err) {
