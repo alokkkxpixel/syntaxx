@@ -1,72 +1,34 @@
-import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { generateSlug } from "@/lib/slug";
+import { redis } from "@/lib/redis";
+import { NextResponse } from "next/server";
 
-// GET all techs
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
-    const techs = await prisma.tech.findMany({
-      where: {
-        docs: {
-          some: {},
-        },
-      },
-      orderBy: {
-        docs: {
-          _count: "desc",
-        },
-      },
-      include: {
-        docs: true,
-      },
-    });
+    const cacheKey = "techs:all";
 
-    
-       console.log(techs)
-    return NextResponse.json(techs);
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
-  }
+    // 1️⃣ Try Redis
+    const cached = await redis.get(cacheKey);
+
+if (cached) {
+  console.log("⚡ REDIS HIT", cacheKey);
+  return NextResponse.json(cached);
 }
 
-// POST create new tech
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    const { name } = body;
+console.log("🐌 DB HIT", cacheKey);
 
-    if (!name) {
-      return NextResponse.json(
-        { error: "Missing required field: name" },
-        { status: 400 }
-      );
-    }
 
-    const slug = generateSlug(name);
+    // 2️⃣ Fetch from DB
+    const techs = await prisma.tech.findMany();
 
-    // Check if tech already exists
-    const existing = await prisma.tech.findUnique({
-      where: { slug }
-    });
+    // 3️⃣ Store in Redis (object, not string)
+    await redis.set(cacheKey, techs, { ex: 3000 });
 
-    if (existing) {
-      return NextResponse.json(
-        { error: "Tech with this name already exists" },
-        { status: 409 }
-      );
-    }
+    return NextResponse.json(techs);
 
-    const tech = await prisma.tech.create({
-      data: { name, slug, title: name, description: name }
-    });
-
-    return NextResponse.json(tech, { status: 201 });
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("TECH API ERROR:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
