@@ -1,7 +1,19 @@
 import { prisma } from "@/lib/prisma";
+import { redis } from "@/lib/redis";
+
+ type cached = string | null;
 
 export async function getDocByTechAndSlug(techSlug: string, docSlug: string) {
   // 1. Find the tech by slug or name
+  const cacheKey = `doc:${techSlug}:${docSlug}`;
+
+  const cached : cached = await redis.get(cacheKey);
+  if (cached) {
+    console.log("⚡ REDIS HIT", cacheKey);
+    return JSON.parse(cached);
+  }
+
+  console.log("🐌 DB HIT", cacheKey);
   const techRecord = await prisma.tech.findFirst({
     where: {
       slug: techSlug
@@ -85,6 +97,16 @@ export async function getDocByTechAndSlug(techSlug: string, docSlug: string) {
     });
     relatedDocs = [...relatedDocs, ...moreDocs];
   }
+ 
+  await redis.set(cacheKey, JSON.stringify({
+    ...doc,
+    snippets: doc.snippets.map((s: any) => ({
+      ...s,
+      filename: s.filename || undefined
+    })),
+    tags,
+    relatedDocs,
+  }), { ex: 60 });
 
   return {
     ...doc,

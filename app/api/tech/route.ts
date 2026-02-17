@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { redis } from "@/lib/redis";
 import { NextResponse } from "next/server";
-
-export const dynamic = "force-dynamic";
-
+import { prisma } from "@/lib/prisma";
+import { generateSlug } from "@/lib/slug";
+import { redis } from "@/lib/redis";
+// GET all techs
 export async function GET() {
   try {
+
     const cacheKey = "techs:all";
 
     // 1️⃣ Try Redis
@@ -19,16 +19,68 @@ if (cached) {
 console.log("🐌 DB HIT", cacheKey);
 
 
-    // 2️⃣ Fetch from DB
-    const techs = await prisma.tech.findMany();
+    const techs = await prisma.tech.findMany({
+      where: {
+        docs: {
+          some: {},
+        },
+      },
+      orderBy: {
+        docs: {
+          _count: "desc",
+        },
+      },
+      include: {
+        docs: true,
+      },
+    });
 
-    // 3️⃣ Store in Redis (object, not string)
-    await redis.set(cacheKey, techs, { ex: 3000 });
+    await redis.set(cacheKey, techs, { ex: 1000 });
 
     return NextResponse.json(techs);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
 
-  } catch (error) {
-    console.error("TECH API ERROR:", error);
+// POST create new tech
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { name } = body;
+
+    if (!name) {
+      return NextResponse.json(
+        { error: "Missing required field: name" },
+        { status: 400 }
+      );
+    }
+
+    const slug = generateSlug(name);
+
+    // Check if tech already exists
+    const existing = await prisma.tech.findUnique({
+      where: { slug }
+    });
+
+    if (existing) {
+      return NextResponse.json(
+        { error: "Tech with this name already exists" },
+        { status: 409 }
+      );
+    }
+
+    const tech = await prisma.tech.create({
+      data: { name, slug, title: name, description: name }
+    });
+
+    return NextResponse.json(tech, { status: 201 });
+  } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

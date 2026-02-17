@@ -61,7 +61,7 @@ export function TechProvider({ children }: { children: ReactNode }) {
     try {
       
       const res = await fetch("/api/tech",{
-    cache: 'no-cache'
+    cache: 'no-store'
   });
       if (!res.ok) throw new Error("Failed to fetch technologies");
 
