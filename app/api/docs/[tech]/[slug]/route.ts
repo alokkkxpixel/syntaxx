@@ -23,7 +23,7 @@ if (cached) {
   return NextResponse.json(cached);
 }
 
-console.log("🐌 DB HIT", cacheKey);
+// console.log("🐌 DB HIT", cacheKey);
 
 // 1. Find the tech by slug or name
 const techRecord = await prisma.tech.findFirst({
