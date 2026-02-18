@@ -99,11 +99,11 @@ export async function getDocByTechAndSlug(techSlug: string, docSlug: string): Pr
 
   const cached  = await redis.get<Doc>(cacheKey);
   if (cached) {
-    // console.log("⚡ REDIS HIT", cacheKey);
+    console.log("⚡ REDIS HIT", cacheKey);
     return cached;
   }
 
-  // console.log("🐌 DB HIT", cacheKey);
+  console.log("🐌 DB HIT", cacheKey);
   const techRecord = await prisma.tech.findFirst({
     where: {
       slug: techSlug
