@@ -1,10 +1,24 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateSlug } from "@/lib/slug";
-
+import { redis } from "@/lib/redis";
 // GET all techs
 export async function GET() {
   try {
+
+    const cacheKey = "techs:all";
+
+    // 1️⃣ Try Redis
+    const cached = await redis.get(cacheKey);
+
+if (cached) {
+  console.log("⚡ REDIS HIT", cacheKey);
+  return NextResponse.json(cached);
+}
+
+console.log("🐌 DB HIT", cacheKey);
+
+
     const techs = await prisma.tech.findMany({
       where: {
         docs: {
@@ -21,8 +35,8 @@ export async function GET() {
       },
     });
 
-    
-       console.log(techs)
+    await redis.set(cacheKey, techs, { ex: 1000 });
+
     return NextResponse.json(techs);
   } catch (err) {
     console.error(err);

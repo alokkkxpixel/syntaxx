@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-
+import { redis } from "@/lib/redis";
 export const dynamic = 'force-dynamic';
+
+ type cached = string | null;
 
 export async function GET(
   req: Request, 
@@ -11,6 +13,18 @@ export async function GET(
         // /api/docs/[tech]/[slug].ts
 
 const { tech, slug } = await params;
+
+const cacheKey = `doc:${tech}:${slug}`;
+  console.log(cacheKey)
+// 1. Try fetching from Redis
+const cached: cached = await redis.get(cacheKey);
+if (cached) {
+  console.log("⚡ REDIS HIT", cacheKey);
+  // console.log("⚡ REDIS HIT Data", cached);
+  return NextResponse.json(cached);
+}
+
+console.log("🐌 DB HIT", cacheKey);
 
 // 1. Find the tech by slug or name
 const techRecord = await prisma.tech.findFirst({
@@ -102,7 +116,9 @@ const formattedDoc = {
   tags,
   relatedDocs,
 };
-
+ // Cache success
+await redis.set(cacheKey, JSON.stringify(formattedDoc), { ex: 300 });
+console.log("✅ CACHED", cacheKey);
 return NextResponse.json(formattedDoc);
 
     } catch (err) {
