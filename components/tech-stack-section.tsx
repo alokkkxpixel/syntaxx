@@ -53,7 +53,7 @@ const techStacks: TechStack[] = [
     title: "Django",
     slug: "django",
     description: "High-level Python web framework for rapid development and clean design.",
-    icon: <ICONS.django className="w-10 h-10 text-[#092E20]" />,
+    icon: <ICONS.django className="w-10 h-10 text-[#47A248]" />,
   },
   {
     title: "Tailwind CSS",

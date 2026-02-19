@@ -34,7 +34,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
-import { useTech } from "@/context/TechContext"
 import { fetchTech } from "@/lib/fetchTech"
 // This is sample data.
 const data = {
@@ -165,7 +164,6 @@ const data = {
 
 
 export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-   const {techs , loading} =  useTech();
   return (
     <Sidebar className="" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -189,7 +187,7 @@ export   function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
           </SidebarMenu>
         </SidebarGroup>
         
-        <NavMain techs={techs} loading={loading} />
+        <NavMain  />
         <NavProjects projects={data.FOllowForUpdates} />
       </SidebarContent>
       <SidebarFooter>

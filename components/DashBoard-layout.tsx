@@ -15,7 +15,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useTech } from "@/context/TechContext"
 import { Children } from "react"
 import { NavbarDemo } from "./Navbar"
 

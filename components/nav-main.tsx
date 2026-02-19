@@ -20,14 +20,15 @@ import * as React from "react"
 import Link from "next/link"
 import { Tech } from "@/context/TechContext"
 import { fetchTech } from "@/lib/fetchTech"
+import { useSelector } from "react-redux"
+import type { RootState } from "@/app/redux/store/store"
 
-export function NavMain({
-  techs = [],
-  loading = false
-}: {
-  techs?: Tech[],
-  loading?: boolean
-}) {
+export function NavMain() {
+
+  const { techs, loading } = useSelector(
+    (state: RootState) => state.tech
+  );
+
   // Map technologies from the database
   const techItems = techs.map((tech) => ({
     title: tech.name,
