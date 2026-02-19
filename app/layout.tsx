@@ -19,23 +19,23 @@ export const metadata: Metadata = {
   title: 'Syntaxx - Find Every Tech Stack Syntax in One Place',
   description: 'Your one-stop resource for finding syntax, documentation, and code snippets across all popular tech stacks.',
   generator: 'v0.app',
-  icons: {
-    // icon: [
-    //   {
-    //     url: '/icon-light-32x32.png',
-    //     media: '(prefers-color-scheme: light)',
-    //   },
-    //   {
-    //     url: '/icon-dark-32x32.png',
-    //     media: '(prefers-color-scheme: dark)',
-    //   },
-    //   {
-    //     url: '/icon.svg',
-    //     type: 'image/svg+xml',
-    //   },
-    // ],
+  // icons: {
+  //   icon: [
+  //     {
+  //       url: '/icon-light-32x32.png',
+  //       media: '(prefers-color-scheme: light)',
+  //     },
+  //     {
+  //       url: '/icon-dark-32x32.png',
+  //       media: '(prefers-color-scheme: dark)',
+  //     },
+  //     {
+  //       url: '/icon.svg',
+  //       type: 'image/svg+xml',
+  //     },
+  //   ],
    
-  },
+  // },
 }
 export default function RootLayout({
   children,
