@@ -18,14 +18,13 @@ import {
 } from "@/components/ui/sidebar"
 import * as React from "react"
 import Link from "next/link"
-import { Tech } from "@/context/TechContext"
 import { fetchTech } from "@/lib/fetchTech"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/app/redux/store/store"
 
 export function NavMain() {
 
-  const { techs, loading } = useSelector(
+  const { techs } = useSelector(
     (state: RootState) => state.tech
   );
 
@@ -44,7 +43,7 @@ export function NavMain() {
    
      
 
-  if (loading) {
+  if (techs.length == 0) {
     return (
       <SidebarGroup>
         <SidebarGroupLabel>Technologies</SidebarGroupLabel>

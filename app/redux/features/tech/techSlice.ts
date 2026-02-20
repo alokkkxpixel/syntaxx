@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface Tech {
-  id: string;
-  name: string;
-  slug: string;
-  createdAt: string;
-  docs?: {
-    id: string;
-    title: string;
-    slug: string;
-  }[];
-}
+import type { Tech } from "@/types/tech"
 
 interface TechState {
   techs: Tech[];

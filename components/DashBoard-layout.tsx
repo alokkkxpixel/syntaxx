@@ -1,3 +1,4 @@
+"use client"
 import { AppSidebar } from "@/components/app-sidebar"
 
 import { ModeToggle } from "@/components/ThemeToggle"
@@ -15,15 +16,30 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { Children } from "react"
+import { Children, useEffect } from "react"
 import { NavbarDemo } from "./Navbar"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/app/redux/store/store"
+import { setError, setLoading, setTechs } from "@/app/redux/features/tech/techSlice"
+import type { Tech } from "@/types/tech"
+
 
 export default function DashLayout({
   children,
-}: Readonly<{
+  techs,
+}: {
   children: React.ReactNode;
-}>) {
-  
+  techs: Tech[];
+}) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (techs?.length) {
+      dispatch(setTechs(techs));
+    }
+  }, [dispatch, techs]);
+
+
   return (
     <>
     

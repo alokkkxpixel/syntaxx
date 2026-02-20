@@ -13,7 +13,7 @@ export default function AppInit() {
 
       try {
         const res = await fetch("/api/tech", {
-          cache: "no-store",
+           next: { revalidate: 3600 } // ISR
         });
 
         if (!res.ok) {

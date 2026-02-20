@@ -10,8 +10,8 @@ function CompareDemo() {
       <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
       
       <Compare
-        firstImage="https://assets.aceternity.com/code-problem.png"
-        secondImage="https://assets.aceternity.com/code-solution.png"
+        firstImage="/code-problem-1.png"
+        secondImage="/code-solution-2.png"
         firstImageClassName="object-cover object-left-top rounded-2xl"
         secondImageClassname="object-cover object-left-top rounded-2xl"
         className="h-[250px] w-full aspect-square md:h-[500px] lg:h-[420px] xl:h-[480px]"
