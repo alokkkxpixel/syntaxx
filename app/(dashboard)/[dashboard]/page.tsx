@@ -32,4 +32,14 @@ export default async function Page ({ params }: PageProps) {
   )
 }
 
- 
+ // app/(dashboard)/[dashboard]/page.tsx
+export async function generateMetadata({ params }: { params: Promise<{ dashboard: string }> }) {
+  const { dashboard } = await params;
+
+  const name = dashboard[0].toUpperCase() + dashboard.slice(1);
+
+  return {
+    title: `${name} Docs`,
+    description: `Official documentation for ${name}`,
+  };
+}

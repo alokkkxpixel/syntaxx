@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
 import { ThemeProvider } from './theme-provider'
-// import { TechProvider } from '@/context/TechContext'
-import AppInit from '@/components/AppInit'
+
+// import AppInit from '@/components/AppInit'
 import { store } from '../redux/store/store'
 import { Provider as ReduxProvider } from "react-redux";
 
