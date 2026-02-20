@@ -32,7 +32,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
     },
     {
       name: "Explore Techs",
-      link: "#Tech",
+      link: "/#Tech",
     },
     {
       name: "Connect with us",

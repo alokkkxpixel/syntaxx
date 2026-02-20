@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import React from "react";
 import Link from "next/link";
@@ -14,7 +14,7 @@ interface TechStack {
 
 export function TechStackCard({ title, slug, description, icon }: TechStack) {
   return (
-    <Link href={`/${slug}`} className="block h-full cursor-pointer">
+    <Link href={`/${slug}`} prefetch className="block h-full cursor-pointer">
       <Card className="h-full border-neutral-200 dark:border-neutral-800 bg-white/70 dark:bg-neutral-900/50 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-lg dark:hover:shadow-none group">
         <CardContent className="p-4 sm:p-6">
           <div className="flex flex-col h-full space-y-3 sm:space-y-4">

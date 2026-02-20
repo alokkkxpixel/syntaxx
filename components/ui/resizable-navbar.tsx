@@ -130,7 +130,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     >
       {items.map((item, idx) => {
         const navItem = (
-          <a
+          <Link prefetch
             onMouseEnter={() => setHovered(idx)}
             onClick={onItemClick}
             className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
@@ -143,7 +143,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
               />
             )}
             <span className="relative z-20">{item.name}</span>
-          </a>
+          </Link>
         );
 
         if (item.content) {

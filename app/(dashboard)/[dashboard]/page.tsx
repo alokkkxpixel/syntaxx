@@ -1,5 +1,6 @@
 
-import { getTechWithDocs } from "@/lib/docs";
+
+import  {getTechWithDocs}  from "@/lib/docs";
 import Doc from "@/components/Docs";
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react'

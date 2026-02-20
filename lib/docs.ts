@@ -1,3 +1,4 @@
+
 import { prisma } from "@/lib/prisma";
 import { redis } from "@/lib/redis";
 
@@ -235,7 +236,7 @@ type TechWithDocs = {
   docs: any[];
 };
 
-export async function getTechWithDocs(techSlug: string): Promise<TechWithDocs | null> {
+export   async function getTechWithDocs(techSlug: string): Promise<TechWithDocs | null> {
 
    const cacheKey = `tech:${techSlug}`;
 

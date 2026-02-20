@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 
 import { BookOpen, ChevronRight } from "lucide-react"
 import {
@@ -84,7 +84,7 @@ export function NavMain() {
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <Link href={subItem.url}>
+                        <Link prefetch href={subItem.url}>
                           <span>{subItem.title}</span>
                         </Link>
                       </SidebarMenuSubButton>

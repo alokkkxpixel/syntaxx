@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -16,7 +16,7 @@ import {
 
 
 
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { Metadata } from "next";
 import { CopyBlock,CodeBlock,dracula  } from "react-code-blocks";
 import SkeletonDoc from "./SkeletonDoc";
@@ -79,19 +79,19 @@ interface StaticDocProps {
 }
 
 export default function StaticDoc({ doc,tech }: StaticDocProps) {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300); // Short delay to prevent "millisecond glitch" and show smooth transition
-    return () => clearTimeout(timer);
-  }, [doc?.id, tech?.id]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 300); // Short delay to prevent "millisecond glitch" and show smooth transition
+  //   return () => clearTimeout(timer);
+  // }, [doc?.id, tech?.id]);
 
-  if (isLoading) {
-    return <SkeletonDoc />
-  }
+  // if (isLoading) {
+  //   return <SkeletonDoc />
+  // }
 
 
 

@@ -31,16 +31,16 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-6">Resources</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/nodejs" className="text-muted-foreground hover:text-foreground transition-colors">Node.js</Link>
+                <Link prefetch href="/nodejs" className="text-muted-foreground hover:text-foreground transition-colors">Node.js</Link>
               </li>
               <li>
-                <Link href="/typescript" className="text-muted-foreground hover:text-foreground transition-colors">TypeScript</Link>
+                <Link prefetch href="/typescript" className="text-muted-foreground hover:text-foreground transition-colors">TypeScript</Link>
               </li>
               <li>
-                <Link href="/react" className="text-muted-foreground hover:text-foreground transition-colors">React</Link>
+                <Link prefetch href="/react" className="text-muted-foreground hover:text-foreground transition-colors">React</Link>
               </li>
               <li>
-                <Link href="/nextjs" className="text-muted-foreground hover:text-foreground transition-colors">Next.js</Link>
+                <Link prefetch href="/nextjs" className="text-muted-foreground hover:text-foreground transition-colors">Next.js</Link>
               </li>
             </ul>
           </div>
@@ -49,7 +49,7 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-foreground mb-6">Company</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
+                <Link prefetch href="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
               </li>
               <li>
                 <Link href="https://x.com/AlokkxPithale_?s=20" className="text-muted-foreground hover:text-foreground transition-colors">Connect With Me</Link>
