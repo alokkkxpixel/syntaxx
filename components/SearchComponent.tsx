@@ -12,25 +12,29 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 import { BookOpen, Laptop, Home, Settings, Search, Layout } from "lucide-react"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState, AppDispatch } from "@/app/redux/store/store"
+import {
+  setQuery,
+  clearSearch,
+  fetchSearchResults,
+} from "@/app/redux/features/searchSlice"
 
-interface SearchResult {
-  techs: any[]
-  docs: any[]
-  totalTechs: number
-  totalDocs: number
-}
-
-export function DocSearch({ open, setOpen }: { open: boolean, setOpen: (open: boolean | ((prev: boolean) => boolean)) => void }) {
-  const [query, setQuery] = React.useState("")
-  const [results, setResults] = React.useState<SearchResult | null>(null)
-  const [loading, setLoading] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
+export function DocSearch({ open, setOpen }: { open: boolean; setOpen: (open: boolean | ((prev: boolean) => boolean)) => void }) {
+  const dispatch = useDispatch<AppDispatch>()
   const router = useRouter()
+
+  const { query, results, loading } = useSelector(
+    (state: RootState) => state.search
+  )
+
+  const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
+  // ⌘K shortcut
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -43,45 +47,24 @@ export function DocSearch({ open, setOpen }: { open: boolean, setOpen: (open: bo
     return () => document.removeEventListener("keydown", down)
   }, [setOpen])
 
+  // debounce search
   React.useEffect(() => {
     if (!query.trim()) {
-      setResults(null)
+      dispatch(clearSearch())
       return
     }
 
-    const controller = new AbortController()
-    
-    const search = async () => {
-      setLoading(true)
-      try {
-        const res = await fetch(`/api/docs/search?q=${encodeURIComponent(query)}`, {
-          signal: controller.signal
-        })
-        const data = await res.json()
-        
-        setResults(data)
-      } catch (err) {
-        if (err instanceof Error && err.name === 'AbortError') return
-        console.error(err)
-      } finally {
-        setLoading(false)
-      }
-    }
+    const timeout = setTimeout(() => {
+      dispatch(fetchSearchResults(query))
+    }, 500)
 
-    const timeoutId = setTimeout(search, 500)
-
-    return () => {
-      controller.abort()
-      clearTimeout(timeoutId)
-    }
-
-    return () => controller.abort()
-  }, [query])
+    return () => clearTimeout(timeout)
+  }, [query, dispatch])
 
   const onSelect = (url: string) => {
     router.push(url)
     setOpen(false)
-    setQuery("") // Reset query on selection
+    dispatch(clearSearch())
   }
 
   if (!mounted) return null
@@ -93,12 +76,12 @@ export function DocSearch({ open, setOpen }: { open: boolean, setOpen: (open: bo
       shouldFilter={false}
       className="sm:top-24 sm:translate-y-0 top-auto bottom-0 translate-y-0 left-0 translate-x-0 sm:left-[50%] sm:translate-x-[-50%] max-w-full sm:max-w-2xl h-[70vh] min-h-[70vh] sm:min-h-0 sm:h-auto duration-300 rounded-b-none sm:rounded-xl data-[state=open]:slide-in-from-bottom-full sm:data-[state=open]:slide-in-from-top-8 sm:data-[state=open]:zoom-in-95 group"
     >
-      <CommandInput 
-        placeholder="Type a command or search documentation..." 
-        value={query}
-        onValueChange={setQuery}
-        className="text-base sm:text-lg"
-      />
+     <CommandInput
+  placeholder="Type a command or search documentation..."
+  value={query}
+  onValueChange={(v) => dispatch(setQuery(v))}
+  className="text-base sm:text-lg"
+/>
       <CommandList className="flex-1 h-full max-h-none sm:max-h-[600px] overflow-y-auto">
         {loading && <div className="p-4 text-sm text-center text-muted-foreground">Searching...</div>}
         

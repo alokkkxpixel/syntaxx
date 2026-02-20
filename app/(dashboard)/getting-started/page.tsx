@@ -15,8 +15,8 @@ export default function GettingStartedDoc() {
 
   const techStacks = [
     { name: "React", category: "Frontend", status: "Available", slug: "react" },
-    { name: "Next.js", category: "Fullstack", status: "Available", slug: "next-js" },
-    { name: "Node.js", category: "Backend", status: "Available", slug: "node-js" },
+    { name: "Next.js", category: "Fullstack", status: "Available", slug: "nextjs" },
+    { name: "Node.js", category: "Backend", status: "Available", slug: "nodejs" },
     { name: "Prisma", category: "ORM", status: "Available", slug: "prisma" },
     { name: "PostgreSQL", category: "Database", status: "Available", slug: "postgresql" },
     { name: "Tailwind CSS", category: "Styling", status: "Available", slug: "tailwind-css" },
