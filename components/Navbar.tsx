@@ -69,7 +69,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
               </kbd>
             </button>
             <NavbarButton variant="secondary" className="font-bold">Login</NavbarButton>
-            <NavbarButton variant="secondary" className="p-0"><ModeToggle /></NavbarButton>
+            <ModeToggle />
           </div>
         </NavBody>
       </Navbar>
@@ -132,13 +132,7 @@ export function NavbarDemo({ showSidebarTrigger = false, className }: { showSide
               >
                 Login
               </NavbarButton>
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="secondary"
-                className="w-full"
-              >
-               <ModeToggle />
-              </NavbarButton>
+                <ModeToggle />
             </div>
           </MobileNavMenu>
         </MobileNav>
