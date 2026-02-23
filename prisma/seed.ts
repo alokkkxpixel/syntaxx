@@ -90,6 +90,12 @@ const techs = [
     slug: 'postgresql',
     title: 'PostgreSQL Relational Database',
     description: 'PostgreSQL is a powerful, open-source relational database system known for reliability, extensibility, and standards compliance. It is widely used in production systems for storing structured data and supporting complex queries. Official documentation: https://www.postgresql.org/docs'
+  },
+  {
+    name: 'MongoDB',
+    slug: 'mongodb',
+    title: 'MongoDB NoSQL Database',
+    description: 'MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas. Official documentation: https://www.mongodb.com/docs/'
   }
 ];
 
