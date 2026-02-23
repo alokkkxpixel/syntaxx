@@ -35,7 +35,9 @@ export default function DashLayout({
 
   useEffect(() => {
     if (techs?.length) {
-      dispatch(setTechs(techs));
+      // ✅ Serialize to avoid "non-serializable value" Redux error
+      const serializableTechs = JSON.parse(JSON.stringify(techs));
+      dispatch(setTechs(serializableTechs));
     }
   }, [dispatch, techs]);
 
