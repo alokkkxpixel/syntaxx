@@ -158,4 +158,29 @@
   .custom-scrollbar-dark::-webkit-scrollbar-thumb:hover {
     background: #475569;
   }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sidebar-border) transparent;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--sidebar-border);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--sidebar-foreground);
+    opacity: 0.5;
+  }
 }
